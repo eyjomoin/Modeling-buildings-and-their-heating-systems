@@ -2,25 +2,29 @@ within FPSS.System;
 model one_zone
   extends Modelica.Icons.Example;
   package MediumWater = AixLib.Media.Water;
-  Einzelkomponenten.TGA_all.TGA_one_zone_simple tGA_one_zone_simple(MediumWater
-      =MediumWater, redeclare FPSS.Parameter.TGA.P_one_zone_start Parameter_TGA)
-    annotation (Placement(transformation(origin = {14, -50}, extent = {{-90, 10}, {-62, 24}})));
-  Einzelkomponenten.House.house_one_zone_simple
-                                         building_one_zone
-    annotation (Placement(transformation(origin = {14, -50}, extent = {{12, -12}, {52, 28}})));
-  FPSS.Einzelkomponenten.DataInput.Selfmade_weather.Input_weather_selfmade_minus2 DataInput(DeltaT = 0) annotation(
-    Placement(transformation(origin = {35.7674, 99.0233}, extent = {{-129.767, -49.0233}, {-67.7674, 12.9767}})));
+  components.TGA_all.TGA_one_zone_simple tGA_one_zone_simple(MediumWater=
+        MediumWater, redeclare FPSS.Parameter.TGA.P_one_zone_start
+      Parameter_TGA) annotation (Placement(transformation(origin={14,-50},
+          extent={{-90,10},{-62,24}})));
+  components.House.house_one_zone_simple building_one_zone annotation (
+      Placement(transformation(origin={14,-50}, extent={{12,-12},{52,28}})));
+  FPSS.components.DataInput.Selfmade_weather.Input_weather_selfmade_minus2
+    DataInput(DeltaT=0) annotation (Placement(transformation(origin={35.7674,
+            99.0233}, extent={{-129.767,-49.0233},{-67.7674,12.9767}})));
 equation
-  connect(DataInput.T_amb, tGA_one_zone_simple.T_amb) annotation(
-    Line(points = {{-28, 100}, {0, 100}, {0, 40}, {-46, 40}, {-46, -8}}, color = {0, 0, 127}));
-  connect(DataInput.T_amb, building_one_zone.T_ambb) annotation(
-    Line(points = {{-28, 100}, {0, 100}, {0, 40}, {44, 40}, {44, -20}}, color = {0, 0, 127}));
-  connect(building_one_zone.rad_R1, tGA_one_zone_simple.rad_R1) annotation(
-    Line(points = {{30, -26}, {0, -26}, {0, -10}, {-32, -10}}));
-  connect(building_one_zone.conv_R1, tGA_one_zone_simple.conv_R1) annotation(
-    Line(points = {{28, -38}, {0, -38}, {0, -32}, {-32, -32}}, color = {191, 0, 0}));
-  connect(building_one_zone.Q_loss_total, tGA_one_zone_simple.T_Room1) annotation(
-    Line(points = {{28, -54}, {0, -54}, {0, -58}, {-32, -58}}, color = {0, 0, 127}));
+  connect(DataInput.T_amb, tGA_one_zone_simple.T_amb) annotation (
+    Line(points={{-28.9,99.6},{0,99.6},{0,40},{-45.2,40},{-45.2,-8.08}}, color = {0, 0, 127}));
+  connect(DataInput.T_amb, building_one_zone.T_ambb) annotation (
+    Line(points={{-28.9,99.6},{0,99.6},{0,40},{44.4615,40},{44.4615,-20.3333}},
+                                                                        color = {0, 0, 127}));
+  connect(building_one_zone.rad_R1, tGA_one_zone_simple.rad_R1) annotation (
+    Line(points={{29.3077,-26.4167},{0,-26.4167},{0,-10.67},{-32.7909,-10.67}}));
+  connect(building_one_zone.conv_R1, tGA_one_zone_simple.conv_R1) annotation (
+    Line(points={{28.6923,-38.4167},{0,-38.4167},{0,-32.79},{-32.5364,-32.79}},
+                                                               color = {191, 0, 0}));
+  connect(building_one_zone.Q_loss_total, tGA_one_zone_simple.T_Room1) annotation (
+    Line(points={{28.7692,-53.6667},{0,-53.6667},{0,-58.2},{-32.7273,-58.2}},
+                                                               color = {0, 0, 127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,120}})),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
