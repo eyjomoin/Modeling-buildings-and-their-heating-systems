@@ -59,10 +59,9 @@ model Room_tubing
         origin={142,-230},
         extent={{-10,-10},{10,10}},
         rotation=-90)));
+  Modelica.Blocks.Sources.Constant const_ctr_HP(k=0.2) annotation (Placement(
+        transformation(origin={-152,-126}, extent={{-10,-10},{10,10}})));
 equation
-  connect(val.y, ctr_room.control_valve)
-    annotation (Line(points={{-112,-148},{-112,-132},{84,-132},{84,-136},{100,
-          -136},{100,-131}},                        color={0,0,127}));
   connect(T_room_set, ctr_room.T_room_set) annotation (Line(points={{240,-100},
           {212,-100},{212,-120},{112,-120}},
                                         color={0,0,127}));
@@ -85,6 +84,8 @@ equation
     annotation (Line(points={{-102,-160},{-22,-160}}, color={0,127,255}));
   connect(radiator.port_b, heating_fluid_out) annotation (Line(points={{18,-160},
           {220,-160},{220,-160}}, color={0,127,255}));
+  connect(val.y, ctr_room.control_valve) annotation (Line(points={{-112,-148},{
+          -112,-138},{100,-138},{100,-131}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false, extent={{-220,-260},{
             220,0}})),

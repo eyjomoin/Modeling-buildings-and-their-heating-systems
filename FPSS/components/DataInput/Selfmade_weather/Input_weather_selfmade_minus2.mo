@@ -13,12 +13,11 @@ model Input_weather_selfmade_minus2
   constant String extreme = "modelica://FPSS/data/selfmade/temperature_selfmade_extreme.txt";
 
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
-    fileName=Modelica.Utilities.Files.loadResource(temp_minus2), tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
+    fileName=Modelica.Utilities.Files.loadResource(temp_minus2),      tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
     Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));
 
 //  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(columns = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, fileName = Modelica.Utilities.Files.loadResource("H:/Dokumente/PoF/Datensatz/konvertiert/Experiment_2/KIT_Data_2.txt"), tableName = "tab", tableOnFile = true) annotation(
-//    Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));
-
+  //    Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Interfaces.RealOutput T_amb(unit="K") annotation (
     Placement(transformation(origin={110,60},     extent = {{-10, -10}, {10, 10}}), iconTransformation(origin={110,60},    extent = {{-10, -10}, {10, 10}})));
   Modelica.Thermal.HeatTransfer.Celsius.ToKelvin toKelvin2 annotation (

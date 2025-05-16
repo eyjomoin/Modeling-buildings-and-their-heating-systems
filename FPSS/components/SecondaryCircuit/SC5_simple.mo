@@ -83,6 +83,8 @@ model SC5_simple
         rotation=180),
         iconTransformation(origin={100,-60},extent={{-20,-20},{20,20}},
         rotation=180)));
+  Modelica.Blocks.Sources.Constant const_ctr_HP(k=1) annotation (Placement(
+        transformation(origin={6,-178}, extent={{-10,-10},{10,10}})));
 equation
   connect(FP_SC1_in,T_HP_sup. port_a)
     annotation (Line(points={{-220,120},{-200,120}}));
@@ -92,8 +94,6 @@ equation
     annotation (Line(points={{-220,-100},{-220,-100}}, color={0,127,255}));
   connect(FP_SC1_in, FP_SC1_in)
     annotation (Line(points={{-220,120},{-220,120}}, color={0,127,255}));
-  connect(ctr_HP.control_signal_HP, signal_ctr_HP) annotation (Line(points={{50,
-          143},{50,-48},{52,-48},{52,-240}}, color={0,0,127}));
   connect(T_HP_sup.T, ctr_HP.T_HP_out_meas) annotation (Line(points={{-190,131},
           {-190,158},{38,158}}, color={0,0,127}));
   connect(T_HP_ret.T, HeatMeater_SC_in.TExt) annotation (Line(points={{-170,-89},
@@ -123,6 +123,8 @@ equation
                                    color={0,0,127}));
   connect(room_tubing.valve_room, ctr_HP.valve_room) annotation (Line(points={{108.423,
           -77.6409},{0,-77.6409},{0,150},{38,150}},         color={0,0,127}));
+  connect(ctr_HP.control_signal_HP, signal_ctr_HP) annotation (Line(points={{50,
+          143},{50,-48},{50,-240},{52,-240}}, color={0,0,127}));
   annotation (
     Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-220, -220}, {220, 220}})),
     experiment(Tolerance = 1e-6, StopTime = 15000),

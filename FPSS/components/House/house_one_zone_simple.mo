@@ -6,11 +6,13 @@ model house_one_zone_simple
      Placement(transformation(extent = {{120, 98}, {140, 118}})),
      choicesAllMatching = true);
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a conv_R1 annotation (
-    Placement(transformation(extent = {{-128, -68}, {-113, -53}}), iconTransformation(extent = {{-110, 14}, {-95, 29}})));
+    Placement(transformation(extent = {{-128, -68}, {-113, -53}}), iconTransformation(extent={{-104,14},
+            {-89,29}})));
   AixLib.Utilities.Interfaces.RadPort rad_R1 annotation (
-    Placement(transformation(extent = {{-128, 68}, {-113, 83}}), iconTransformation(extent = {{-106, 86}, {-91, 101}})));
-  Modelica.Blocks.Interfaces.RealOutput T_Room1 annotation (
-    Placement(transformation(origin = {150, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin = {-102, -70}, extent = {{10, -10}, {-10, 10}})));
+    Placement(transformation(extent = {{-128, 68}, {-113, 83}}), iconTransformation(extent={{-102,86},
+            {-87,101}})));
+  Modelica.Blocks.Interfaces.RealOutput T_Room1(unit = "K") annotation (
+    Placement(transformation(origin = {150, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin={-96,-70},     extent = {{10, -10}, {-10, 10}})));
   Modelica.Thermal.HeatTransfer.Sensors.HeatFlowSensor heatFlowSensor_rad annotation (
     Placement(transformation(origin = {0, -62}, extent = {{-110, 66}, {-90, 86}})));
   Modelica.Thermal.HeatTransfer.Sensors.HeatFlowSensor heatFlowSensor_con annotation (
@@ -44,13 +46,17 @@ model house_one_zone_simple
   Modelica.Thermal.HeatTransfer.Components.ThermalResistor conRes_ground(R = 1/Parameter_building.hground/(Parameter_building.A_ground)) "Thermal resistance for convective heat transfer to ground plate" annotation (
     Placement(transformation(origin = {-27, -11}, extent = {{-11, -11}, {11, 11}}, rotation = 90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_wall(unit = "W") = walRes_out.Q_flow annotation (
-    Placement(transformation(origin = {6, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-102, -70}, extent = {{10, -10}, {-10, 10}})));
+    Placement(transformation(origin = {6, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin={4,-98},       extent = {{10, -10}, {-10, 10}},
+        rotation=90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_roof(unit = "W") = walRes_roof.Q_flow annotation (
-    Placement(transformation(origin = {64, -128}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-102, -70}, extent = {{10, -10}, {-10, 10}})));
+    Placement(transformation(origin = {64, -128}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin={-22,-98},     extent = {{10, -10}, {-10, 10}},
+        rotation=90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_ground(unit = "W") = walRes_ground.Q_flow annotation (
-    Placement(transformation(origin = {-36, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-102, -70}, extent = {{10, -10}, {-10, 10}})));
+    Placement(transformation(origin = {-36, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin={-50,-98},     extent = {{10, -10}, {-10, 10}},
+        rotation=90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_total(unit = "W") = walRes_ground.Q_flow + walRes_out.Q_flow + walRes_roof.Q_flow "total heat loss of the building" annotation (
-    Placement(transformation(origin = {112, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-102, -70}, extent = {{10, -10}, {-10, 10}})));
+    Placement(transformation(origin = {112, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin={34,-98},      extent = {{10, -10}, {-10, 10}},
+        rotation=90)));
   Modelica.Blocks.Interfaces.RealInput T_ambb(unit = "K") annotation (
     Placement(transformation(origin = {-132, 100}, extent = {{10, -10}, {-10, 10}}, rotation = 180), iconTransformation(origin = {0, 130}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
 equation
