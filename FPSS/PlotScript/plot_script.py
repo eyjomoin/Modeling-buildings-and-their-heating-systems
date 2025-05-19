@@ -4,13 +4,17 @@ Created on Wed May 14 10:04:20 2025
 
 @author: hart_t1
 
-This script is used to plot the simulation results of our FPSS model. Make sure to change the path according to wher OMEdit saves its one_zone_res.mat file.
+This script is used to plot the simulation results of our FPSS model. 
+Make sure to change the path according to where OMEdit saves its one_zone_res.mat file.
+And make sure to pip install DyMat in order to be able to run the script.
 
 """
 
 import DyMat
 import matplotlib.pyplot as plt
 import numpy as np
+import os
+import datetime
 
 ### choose a time unit:
 # timeunit = 'seconds'
@@ -20,6 +24,10 @@ timeunit = 'hours'
 ### choose your .mat file
 path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
 
+
+### get teh file creation time
+timestamp = os.path.getmtime(path_file)
+modification_time = datetime.datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')
 
 df = DyMat.DyMatFile(path_file)
 
@@ -61,6 +69,7 @@ plt.ylabel("$T_{sup}$ [°C]")
 
 fig, axs = plt.subplots(3, 3, sharex=True)
 fig.suptitle("Controller")
+fig.text(0.01, 0.01, f'File: {path_file}\nLast Modified: {modification_time}', ha='left', fontsize=8)
 
 axs[0,0].plot(time, df["tGA_one_zone_simple.PrimaryCircuit.TBorIn.T"]-273.15, label='$T_{Bor,in}$ [°C]')
 axs[0,0].plot(time, df["tGA_one_zone_simple.PrimaryCircuit.TBorOut.T"]-273.15, label='$T_{Bor,out}$ [°C]')
@@ -116,6 +125,7 @@ plt.get_current_fig_manager().window.showMaximized()
 
 fig, axs = plt.subplots(2, 3, sharex=True)
 fig.suptitle("miscellaneous")
+fig.text(0.01, 0.01, f'File: {path_file}\nLast Modified: {modification_time}', ha='left', fontsize=8)
 
 axs[0,0].plot(time, df['DataInput.T_amb']-273.15, label="$T_{amb}$ [°C]")
 axs[0,0].legend()
@@ -161,6 +171,7 @@ plt.get_current_fig_manager().window.showMaximized()
 
 fig, axs = plt.subplots(2, 3, sharex=True)
 fig.suptitle("Heat Pump")
+fig.text(0.01, 0.01, f'File: {path_file}\nLast Modified: {modification_time}', ha='left', fontsize=8)
 
 axs[0,0].plot(time, df['tGA_one_zone_simple.SecondaryCircuit.ctr_HP.PID_HP.y'], label='ctr HeatPump')        
 axs[0,0].legend()
