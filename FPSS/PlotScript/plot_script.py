@@ -154,7 +154,7 @@ axs[1,1].set_xlabel(timeunit)
 axs[1,1].legend() 
 
 axs[1,2].plot(time, df['building_one_zone.walCap_ground.T']-273.15, label='$T_{baseplate}$ [°C]') 
-axs[1,2].plot(time, df['building_one_zone.walCap_out.T']-273.15, label='$T_{walls}$ [°C]') 
+axs[1,2].plot(time, df['building_one_zone.walCap_wall.T']-273.15, label='$T_{walls}$ [°C]') 
 axs[1,2].plot(time, df["building_one_zone.walCap_roof.T"]-273.15, label='$T_{roof}$ [°C]')
 axs[1,2].set_xlabel(timeunit)
 axs[1,2].legend()
@@ -202,6 +202,55 @@ axs[1,2].plot(time, df['tGA_one_zone_simple.PrimaryCircuit.cbm1.Control_m_flow']
 axs[1,2].plot(time, df['tGA_one_zone_simple.SecondaryCircuit.pum_HP.m_flow'], label='$\dot{m}_{sec}$ [kg/s]') 
 axs[1,2].set_xlabel(timeunit)
 axs[1,2].legend()
+
+# Set x-axis limits for all subplots
+for ax in axs.flat:
+    ax.set_xlim([time[0], time[len(time)-1]])    
+
+# Layout so plots do not overlap
+fig.tight_layout()
+plt.get_current_fig_manager().window.showMaximized()
+
+
+
+
+
+
+
+fig, axs = plt.subplots(2, 2, sharex=True)
+fig.suptitle("Building")
+fig.text(0.01, 0.01, f'File: {path_file}\nLast Modified: {modification_time}', ha='left', fontsize=8)
+
+axs[0,0].plot(time, df['building_one_zone.Q_loss_ground']/1000, label='ground')        
+axs[0,0].plot(time, df['building_one_zone.Q_loss_wall']/1000, label='wall')
+axs[0,0].plot(time, df['building_one_zone.Q_loss_roof']/1000, label='roof')
+axs[0,0].plot(time, df['building_one_zone.Q_loss_total']/1000, label='total')
+axs[0,0].set_ylabel("$\dot{Q}_{loss}$ [kW]")
+axs[0,0].legend()
+
+axs[0,1].plot(time, df["building_one_zone.walCap_ground.T"]-273.15, label='groundplate')
+axs[0,1].plot(time, df["building_one_zone.walCap_wall.T"]-273.15, label='wall')
+axs[0,1].plot(time, df["building_one_zone.walCap_roof.T"]-273.15, label='roof')
+axs[0,1].plot(time, df["tGA_one_zone_simple.SecondaryCircuit.room_tubing.radiator.heatPortRad.T"]-273.15, label='radiative')
+axs[0,1].plot(time, df["building_one_zone.senTemZonAir.T"]-273.15, label='air room')
+axs[0,1].set_ylabel("$T$ [°C]")
+axs[0,1].legend()
+
+axs[1,0].plot(time, df["building_one_zone.conRes_ground.Q_flow"]/1000, label='groundplate')
+axs[1,0].plot(time, df["building_one_zone.conRes_wall.Q_flow"]/1000, label='wall')
+axs[1,0].plot(time, df["building_one_zone.conRes_roof.Q_flow"]/1000, label='roof')
+axs[1,0].set_xlabel(timeunit)
+axs[1,0].set_ylabel("$\dot{Q}_{convective}$ [kW]")
+axs[1,0].legend()
+
+axs[1,1].plot(time, df["building_one_zone.heatFlowSensor_rad_ground.Q_flow"]/1000, label='groundplate')
+axs[1,1].plot(time, df["building_one_zone.heatFlowSensor_rad_wall.Q_flow"]/1000, label='wall')
+axs[1,1].plot(time, df["building_one_zone.heatFlowSensor_rad_roof.Q_flow"]/1000, label='roof')
+axs[1,1].set_xlabel(timeunit)
+axs[1,1].set_ylabel("$\dot{Q}_{radiative}$ [kW]")
+axs[1,1].legend()
+
+
 
 # Set x-axis limits for all subplots
 for ax in axs.flat:
