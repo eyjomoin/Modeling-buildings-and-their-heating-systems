@@ -59,7 +59,7 @@ model Room_tubing
         origin={142,-230},
         extent={{-10,-10},{10,10}},
         rotation=-90)));
-  Modelica.Blocks.Sources.Constant const_ctr_HP(k=0.2) annotation (Placement(
+  Modelica.Blocks.Sources.Constant const_ctr_val(k=0.2) annotation (Placement(
         transformation(origin={-152,-126}, extent={{-10,-10},{10,10}})));
 equation
   connect(T_room_set, ctr_room.T_room_set) annotation (Line(points={{240,-100},

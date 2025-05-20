@@ -3,7 +3,7 @@ record P_house_modified
   extends FPSS.Parameter.BaseRecords.Building_Base_Record(
   Vzone           =  365.17,
   T_zone_start    = 273.15+20,
-  T_ground        = 273.15+10,
+  T_ground        = 273.15+2,
   A_wall_in       = 125.9,
   dWall_in        = 0.015,
   hWall_in        = 2,

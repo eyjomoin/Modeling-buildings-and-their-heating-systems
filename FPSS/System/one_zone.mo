@@ -31,6 +31,6 @@ equation
             -100},{100,120}})),                                  Diagram(
         coordinateSystem(preserveAspectRatio=false, extent={{-100,-100},{100,
             120}})),
-    experiment(StopTime=25000, __Dymola_Algorithm="Dassl"),
+    experiment(StopTime=600000, __Dymola_Algorithm="Dassl"),
   Documentation(info = "<html><head></head><body>Model consisting of a Heating System model (TGA) and a house model (purple house)<div><br></div><div>We have 3 connections between the models:</div><div><ul><li>Heat flow connector for radiative heat transfer</li><li>Heat flow connector for convective heat transfer</li><li>Real connector that gives the Heating System model the measured temperature of the house</li></ul><div>Both models need the ambient temperature as imput. It is delivered by teh weather model.</div></div><div><br></div><div><br></div></body></html>"));
 end one_zone;
