@@ -45,7 +45,7 @@ elif timeunit == "hours":
 
 def value_to_array(declaration,time, to_celsius=False, to_bar=False, to_kW=False):
     """
-    Values, that are constant over the whole simulation, are saved only once in the .mat file. In order to plot these values we need an array. This function creates an array, that is filled with the value as many times as time as entries.
+    Values, that are constant over the whole simulation, are saved only once in the .mat file. In order to plot these values we need an array. This function creates an array, that is filled with the value as many times as entries.
     Also this function can convert from Kelvin to Celsius from Pascal to bar and from Watt to KW.
     """
     if to_celsius:
