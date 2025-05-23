@@ -1,10 +1,7 @@
 within FPSS.components.SecondaryCircuit;
 model SC5_simple
   replaceable package MediumWater = AixLib.Media.Water "Medium model for water";
-  parameter Modelica.Units.SI.Temperature T_room_set = 273.15 + 20 "Room set temperature";
-  replaceable parameter FPSS.Parameter.TGA.P_one_zone_start Parameter_TGA
-    constrainedby FPSS.Parameter.TGA.P_one_zone_start annotation (Placement(
-        transformation(extent={{-204,190},{-184,210}})), choicesAllMatching=true);
+  parameter FPSS.Parameter.TGA.TGA_base Parameter_TGA "Parameter from parameter file";
 
   AixLib.Fluid.Sources.Boundary_pT bouWat(redeclare package Medium =
         MediumWater,
@@ -69,7 +66,7 @@ model SC5_simple
         extent={{-40.5,-23.5006},{40.5,23.4997}},
         rotation=270,
         origin={126.5,-51.5})));
-  Modelica.Blocks.Sources.Constant T_set(k=T_room_set) annotation (Placement(
+  Modelica.Blocks.Sources.Constant T_set(k=Parameter_TGA.T_room_set) annotation (Placement(
         transformation(origin={182,-140}, extent={{10,-10},{-10,10}})));
   AixLib.Utilities.Interfaces.RadPort starRad annotation (Placement(transformation(extent={{210,-24},
             {230,-4}}),                                                                                        iconTransformation(extent={{90,46},

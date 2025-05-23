@@ -1,9 +1,9 @@
 within FPSS.Parameter.Building;
-record P_house_start
-  extends FPSS.Parameter.BaseRecords.Building_Base_Record(
+record Building_modified "Modified parameter for the house"
+  extends Building_base(
   Vzone           =  365.17,
   T_zone_start    = 273.15+20,
-  T_ground        = 273.15+10,
+  T_ground        = 273.15+2,
   A_wall_in       = 125.9,
   dWall_in        = 0.015,
   hWall_in        = 2,
@@ -19,7 +19,7 @@ record P_house_start
   A_ground        = 74.71,
   dground         = 0.3,
   hground         = 2,
-  kground         = 2.3,
+  kground         = 2.3*0.2,
   rhoground       = 2400,
   cpground        = 880,
   A_roof          = 108,
@@ -28,7 +28,7 @@ record P_house_start
   kroof           = 0.18,
   rhoroof         = 55,
   cproof          = 1450);
-
-  annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
-        coordinateSystem(preserveAspectRatio=false)));
-end P_house_start;
+  annotation (
+      defaultComponentPrefixes = "parameter",
+      defaultComponentName = "Parameter_building");
+end Building_modified;

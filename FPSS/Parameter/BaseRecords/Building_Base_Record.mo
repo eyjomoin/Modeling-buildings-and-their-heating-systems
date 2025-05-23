@@ -34,6 +34,7 @@ record Building_Base_Record "Base record definition for TGA records"
   parameter Modelica.Units.SI.SpecificHeatCapacity cproof "roof specific heat capacity";
 
   parameter Modelica.Units.SI.Temperature T_zone_start "Air and thermal mass starting temperature of the building";
-   annotation (Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
+   annotation (    defaultComponentPrefixes = "parameter",
+    defaultComponentName = "Parameter_building", Icon(coordinateSystem(preserveAspectRatio=false)), Diagram(
         coordinateSystem(preserveAspectRatio=false)));
 end Building_Base_Record;

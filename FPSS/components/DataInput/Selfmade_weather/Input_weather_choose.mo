@@ -1,22 +1,13 @@
 within FPSS.components.DataInput.Selfmade_weather;
-model Input_weather_selfmade
+model Input_weather_choose
 
   parameter Real DeltaT = 0 "To modify the ambient temperature";
 
-// Eines der Experimente muss man sich dann unten auswählen...
-  constant String Exp1s = "modelica://FPSS/data/Experiment 1/chopped/df_weather.txt";
-  constant String all_temperatures = "modelica://FPSS/data/selfmade/temperature_selfmade_all_temp.txt";
-  constant String all_temperatures_short = "modelica://FPSS/data/selfmade/temperature_selfmade_all_temp_short.txt";
-  constant String temp_moderate = "modelica://FPSS/data/selfmade/temperature_selfmade_moderate.txt";
-  constant String temp_8 = "modelica://FPSS/data/selfmade/temperature_selfmade_8.txt";
-  constant String extreme = "modelica://FPSS/data/selfmade/temperature_selfmade_extreme.txt";
+  replaceable parameter weatherfiles.weather_base_const input_weather constrainedby weatherfiles.weather_base_const annotation(choicesAllMatching = true);
 
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
-    fileName=Modelica.Utilities.Files.loadResource(extreme), tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
+    fileName=Modelica.Utilities.Files.loadResource(input_weather.filename),      tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
     Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));
-
-//  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(columns = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, fileName = Modelica.Utilities.Files.loadResource("H:/Dokumente/PoF/Datensatz/konvertiert/Experiment_2/KIT_Data_2.txt"), tableName = "tab", tableOnFile = true) annotation(
-//    Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));
 
   Modelica.Blocks.Interfaces.RealOutput T_amb(unit="K") annotation (
     Placement(transformation(origin={110,60},     extent = {{-10, -10}, {10, 10}}), iconTransformation(origin={110,60},    extent = {{-10, -10}, {10, 10}})));
@@ -49,4 +40,4 @@ equation
         Line(points={{80,-60},{80,0}}, color={0,0,0})}), Documentation(info="<html>
 <p>Model for weather data input</p>
 </html>"));
-end Input_weather_selfmade;
+end Input_weather_choose;

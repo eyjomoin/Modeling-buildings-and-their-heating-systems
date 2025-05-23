@@ -1,8 +1,8 @@
 within FPSS.components.PrimaryCircuit;
 model PC
   replaceable package MediumAF = AixLib.Media.Antifreeze.PropyleneGlycolWater(X_a = 0.40, property_T = 293.15) "Propylene glycol water, 40% mass fraction";
-  replaceable parameter FPSS.Parameter.TGA.P_one_zone_start Parameter_TGA
-    constrainedby FPSS.Parameter.TGA.P_one_zone_start annotation (Placement(
+  replaceable parameter FPSS.Parameter.TGA2.P_one_zone_start Parameter_TGA
+    constrainedby FPSS.Parameter.TGA2.P_one_zone_start annotation (Placement(
         transformation(extent={{48,160},{68,180}})), choicesAllMatching=true);
 
   AixLib.Fluid.Sensors.TemperatureTwoPort TBorIn(redeclare package Medium = MediumAF, m_flow_nominal = Parameter_TGA.mflow_prim_max, T_start = Parameter_TGA.T_source-Parameter_TGA.DeltaT_prim, T(start = Parameter_TGA.T_source-Parameter_TGA.DeltaT_prim)) annotation (

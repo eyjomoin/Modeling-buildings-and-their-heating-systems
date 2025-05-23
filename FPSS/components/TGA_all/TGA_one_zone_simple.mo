@@ -2,10 +2,14 @@ within FPSS.components.TGA_all;
 model TGA_one_zone_simple
   replaceable package MediumAF = AixLib.Media.Antifreeze.PropyleneGlycolWater(X_a = 0.40, property_T = 293.15) "Propylene glycol water, 40% mass fraction";
   replaceable package MediumWater = AixLib.Media.Water "Medium model for water";
-  replaceable parameter FPSS.Parameter.TGA.P_one_zone_start Parameter_TGA constrainedby
-    FPSS.Parameter.TGA.P_one_zone_start                                                                                     annotation (
-     Placement(transformation(extent={{-118,28},{-98,48}})),
-     choicesAllMatching = true);
+
+  
+  replaceable parameter FPSS.Parameter.TGA.TGA_base Parameter_TGA annotation (Placement(
+        transformation(extent = {{-118, 28}, {-98, 48}}))) constrainedby FPSS.Parameter.TGA.TGA_base annotation(choicesAllMatching = true, Placement(
+        transformation(extent={{-118,28},{-98,48}})));
+
+
+
   AixLib.Fluid.HeatPumps.ScrollWaterToWater HeatPump(dp1_nominal = 2000, dp2_nominal = 2000,
     T2_start=Parameter_TGA.T_source,
     enable_temperature_protection=true,
@@ -15,10 +19,9 @@ model TGA_one_zone_simple
       package Medium2 =                                                                                                                                                                                                         MediumAF,
     T1_start=Parameter_TGA.T_room_set+10,                                                                                                                                                                                                        scaling_factor = Parameter_TGA.scaling_factor_HP) annotation (
     Placement(transformation(origin = {-42, 2}, extent = {{10, -10}, {-10, 10}}, rotation = -90)));
-  FPSS.components.PrimaryCircuit.PC_m_const PrimaryCircuit annotation (
+  FPSS.components.PrimaryCircuit.PC_m_const PrimaryCircuit(Parameter_TGA=Parameter_TGA) annotation (
       Placement(transformation(origin={-99,3}, extent={{-25,-25},{25,25}})));
-  FPSS.components.SecondaryCircuit.SC5_simple SecondaryCircuit(T_room_set=
-        Parameter_TGA.T_room_set) annotation (Placement(transformation(origin={
+  FPSS.components.SecondaryCircuit.SC5_simple SecondaryCircuit(Parameter_TGA=Parameter_TGA) annotation (Placement(transformation(origin={
             -68,38}, extent={{62,-56},{100,-18}})));
   Modelica.Thermal.HeatTransfer.Interfaces.HeatPort_a conv_R1 annotation (
     Placement(transformation(origin = {-40, 40}, extent = {{132, -48}, {147, -33}}), iconTransformation(extent={{92,-6},
