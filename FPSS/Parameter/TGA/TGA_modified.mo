@@ -15,7 +15,7 @@ record TGA_modified "Modified parameter for the house"
   
   DeltaT_prim=4,
   
-  Qflow_max=2000, 
+  Qflow_max=11000, 
   
   dp_pump=2000,
   p_prim=200000,

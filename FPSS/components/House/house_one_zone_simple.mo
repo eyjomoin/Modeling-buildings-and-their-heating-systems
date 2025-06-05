@@ -18,23 +18,19 @@ model house_one_zone_simple
   Modelica.Blocks.Interfaces.RealOutput T_Room1(unit = "K") annotation (
     Placement(transformation(origin = {150, 0}, extent = {{-10, -10}, {10, 10}}), iconTransformation(origin={-96,-70},     extent = {{10, -10}, {-10, 10}})));
   Modelica.Thermal.HeatTransfer.Components.HeatCapacitor walCap_wall(C=
-        Parameter_building.A_wall_in*Parameter_building.dWall_in*
-        Parameter_building.cpWall_in*Parameter_building.rhoWall_in +
-        Parameter_building.A_wall_out*Parameter_building.dWall_out*
-        Parameter_building.cpWall_out*Parameter_building.rhoWall_out, T(start=
+        Parameter_building.A_wall*Parameter_building.dWall*
+        Parameter_building.cpWall*Parameter_building.rhoWall, T(start=
           Parameter_building.T_zone_start - 1, fixed=true))
     "Thermal mass of walls" annotation (Placement(transformation(origin={27,45},
           extent={{-13,-13},{13,13}})));
   Modelica.Thermal.HeatTransfer.Components.ThermalResistor walRes_wall(R=
-        Parameter_building.dWall_out/Parameter_building.A_wall_out/
-        Parameter_building.kWall_out) "Thermal resistor for outer wall"
+        Parameter_building.dWall/Parameter_building.A_wall/
+        Parameter_building.kWall) "Thermal resistor for outer wall"
     annotation (Placement(transformation(
         origin={4,-3},
         extent={{66,-11},{88,11}},
         rotation=90)));
-  Modelica.Thermal.HeatTransfer.Components.ThermalResistor conRes_wall(R=1/
-        Parameter_building.hWall_in/(Parameter_building.A_wall_in +
-        Parameter_building.A_wall_out))
+  Modelica.Thermal.HeatTransfer.Components.ThermalResistor conRes_wall(R=1/(Parameter_building.hWall*Parameter_building.A_wall))
     "Thermal resistance for convective heat transfer to outer wall"
     annotation (Placement(transformation(
         origin={27,-11},

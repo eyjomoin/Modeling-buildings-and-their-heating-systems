@@ -25,13 +25,15 @@ timeunit = 'hours'
 path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
 
 
+### by default all plots are disabled
+plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPump=False
+
 ### choose your plots
-plot_heating_curve=True
+# plot_heating_curve=True
 plot_controller=True
 plot_miscellaneous=True
 plot_building=True
 plot_HeatPump=True
-
 
 ### get teh file creation time
 timestamp = os.path.getmtime(path_file)
@@ -164,9 +166,9 @@ if plot_miscellaneous:
     axs[1,1].set_xlabel(timeunit)
     axs[1,1].legend() 
     
-    axs[1,2].plot(time, df['building_one_zone.walCap_ground.T']-273.15, label='$T_{baseplate}$ [°C]') 
-    axs[1,2].plot(time, df['building_one_zone.walCap_wall.T']-273.15, label='$T_{walls}$ [°C]') 
-    axs[1,2].plot(time, df["building_one_zone.walCap_roof.T"]-273.15, label='$T_{roof}$ [°C]')
+    axs[1,2].plot(time, df['building_one_zone.ground.Cap.T']-273.15, label='$T_{baseplate}$ [°C]') 
+    axs[1,2].plot(time, df['building_one_zone.wall.Cap.T']-273.15, label='$T_{walls}$ [°C]') 
+    axs[1,2].plot(time, df["building_one_zone.roof.Cap.T"]-273.15, label='$T_{roof}$ [°C]')
     axs[1,2].set_xlabel(timeunit)
     axs[1,2].legend()
     
@@ -240,30 +242,29 @@ if plot_building:
     axs[0,0].set_ylabel("$\dot{Q}_{loss}$ [kW]")
     axs[0,0].legend()
     
-    axs[0,1].plot(time, df["building_one_zone.walCap_ground.T"]-273.15, label='groundplate')
-    axs[0,1].plot(time, df["building_one_zone.walCap_wall.T"]-273.15, label='wall')
-    axs[0,1].plot(time, df["building_one_zone.walCap_roof.T"]-273.15, label='roof')
+    axs[0,1].plot(time, df["building_one_zone.ground.Cap.T"]-273.15, label='groundplate')
+    axs[0,1].plot(time, df["building_one_zone.wall.Cap.T"]-273.15, label='wall')
+    axs[0,1].plot(time, df["building_one_zone.roof.Cap.T"]-273.15, label='roof')
     axs[0,1].plot(time, df["tGA_one_zone_simple.SecondaryCircuit.room_tubing.radiator.heatPortRad.T"]-273.15, label='radiative')
     axs[0,1].plot(time, df["building_one_zone.senTemZonAir.T"]-273.15, label='air room')
     axs[0,1].set_ylabel("$T$ [°C]")
     axs[0,1].legend()
     
-    axs[1,0].plot(time, df["building_one_zone.conRes_ground.Q_flow"]/1000, label='groundplate')
-    axs[1,0].plot(time, df["building_one_zone.conRes_wall.Q_flow"]/1000, label='wall')
-    axs[1,0].plot(time, df["building_one_zone.conRes_roof.Q_flow"]/1000, label='roof')
+    axs[1,0].plot(time, df["building_one_zone.ground.R_cond_conv_e.port_a.Q_flow"]/1000, label='groundplate')
+    axs[1,0].plot(time, df["building_one_zone.wall.R_cond_conv_e.port_a.Q_flow"]/1000, label='wall')
+    axs[1,0].plot(time, df["building_one_zone.roof.R_cond_conv_e.port_a.Q_flow"]/1000, label='roof')
     axs[1,0].set_xlabel(timeunit)
-    axs[1,0].set_ylabel("$\dot{Q}_{convective}$ [kW]")
+    axs[1,0].set_ylabel("$\dot{Q}_{convective}$ [kW] (from air to component)")
     axs[1,0].legend()
     
-    axs[1,1].plot(time, df["building_one_zone.heatFlowSensor_rad_ground.Q_flow"]/1000, label='groundplate')
-    axs[1,1].plot(time, df["building_one_zone.heatFlowSensor_rad_wall.Q_flow"]/1000, label='wall')
-    axs[1,1].plot(time, df["building_one_zone.heatFlowSensor_rad_roof.Q_flow"]/1000, label='roof')
+    axs[1,1].plot(time, df["building_one_zone.ground.res_rad.port_a.Q_flow"]/1000, label='groundplate')
+    axs[1,1].plot(time, df["building_one_zone.wall.res_rad.port_a.Q_flow"]/1000, label='wall')
+    axs[1,1].plot(time, df["building_one_zone.roof.res_rad.port_a.Q_flow"]/1000, label='roof')
     axs[1,1].set_xlabel(timeunit)
-    axs[1,1].set_ylabel("$\dot{Q}_{radiative}$ [kW]")
+    axs[1,1].set_ylabel("$\dot{Q}_{radiative}$ [kW] (from radiator to component)")
     axs[1,1].legend()
     
-    
-    
+        
     # Set x-axis limits for all subplots
     for ax in axs.flat:
         ax.set_xlim([time[0], time[len(time)-1]])    
