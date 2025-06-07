@@ -10,9 +10,11 @@ model Input_weather_selfmade
   constant String temp_moderate = "modelica://FPSS/data/selfmade/temperature_selfmade_moderate.txt";
   constant String temp_8 = "modelica://FPSS/data/selfmade/temperature_selfmade_8.txt";
   constant String extreme = "modelica://FPSS/data/selfmade/temperature_selfmade_extreme.txt";
+  
+  constant String OL = "modelica://FPSS/data/selfmade/TRY_2012_OL.txt";
 
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
-    fileName=Modelica.Utilities.Files.loadResource(extreme), tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
+    fileName=Modelica.Utilities.Files.loadResource(OL), tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
     Placement(transformation(origin = {-86, 0}, extent = {{-10, -10}, {10, 10}})));
 
 //  Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(columns = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}, fileName = Modelica.Utilities.Files.loadResource("H:/Dokumente/PoF/Datensatz/konvertiert/Experiment_2/KIT_Data_2.txt"), tableName = "tab", tableOnFile = true) annotation(

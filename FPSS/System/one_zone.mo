@@ -9,9 +9,9 @@ model one_zone
           extent={{-160.713,15.7147},{-110.712,37.7147}})));
   components.House.house_one_zone_simple building_one_zone annotation (
       Placement(transformation(origin={14,-50}, extent={{12,-12},{52,28}})));
-  FPSS.components.DataInput.Selfmade_weather.Input_weather_selfmade_minus2
+  FPSS.components.DataInput.Selfmade_weather.Input_weather_selfmade
     DataInput(DeltaT=0) annotation (Placement(transformation(origin={35.7674,
-            99.0233}, extent={{-129.767,-49.0233},{-67.7674,12.9767}})));
+            97.0233}, extent={{-129.767,-49.0233},{-67.7674,12.9767}})));
 equation
   connect(building_one_zone.rad_R1, tGA_one_zone_simple.rad_R1) annotation (
     Line(points={{29.9231,-26.4167},{29.9231,-28.11},{-48.1123,-28.11}}));
@@ -22,10 +22,10 @@ equation
       Line(points={{29.6923,-53.6667},{0,-53.6667},{0,-47.8},{-47.9987,-47.8}},
         color={0,0,127}));
   connect(DataInput.T_amb_mod, building_one_zone.T_ambb) annotation (Line(
-        points={{-28.9,62.4},{0,62.4},{0,20},{44.4615,20},{44.4615,-20.3333}},
+        points={{-29,60},{-29,20},{44.4615,20},{44.4615,-20.3333}},
         color={0,0,127}));
   connect(DataInput.T_amb_mod, tGA_one_zone_simple.T_amb) annotation (Line(
-        points={{-28.9,62.4},{0,62.4},{0,20},{-75.272,20},{-75.272,-28}}, color
+        points={{-29,60},{-29,20},{-75.272,20},{-75.272,-28}}, color
         ={0,0,127}));
   annotation (Icon(coordinateSystem(preserveAspectRatio=false, extent={{-100,
             -100},{100,120}})),                                  Diagram(
