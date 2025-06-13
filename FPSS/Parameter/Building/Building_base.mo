@@ -15,11 +15,12 @@ parameter Modelica.Units.SI.CoefficientOfHeatTransfer UWall=0.25 "Overall heat t
 
 parameter Modelica.Units.SI.Area A_ground=74.71 "Area of ground";
 parameter Modelica.Units.SI.Length dground=0.3 "Thickness of ground";
-parameter Modelica.Units.SI.CoefficientOfHeatTransfer hground=10 "Indoor Convective heat transfer coefficient at the ground";
+parameter Modelica.Units.SI.CoefficientOfHeatTransfer hground=5.88 "Indoor Convective heat transfer coefficient at the ground";
 parameter Modelica.Units.SI.ThermalConductivity kground=2.3 "ground thermal conductivity";
 parameter Modelica.Units.SI.Density rhoground=2400 "ground density";
 parameter Modelica.Units.SI.SpecificHeatCapacity cpground=880 "ground specific heat capacity";
 parameter Modelica.Units.SI.CoefficientOfHeatTransfer Uground=0.3 "Overall heat transfer coefficient of the ground";
+parameter Real b_soil=0.5 "Adjustment factor for soil: 0.5 -> heat transfer through gound plate depends on the property of the soil. This factor describes the heat transfer properties of the soil";
 
 parameter Modelica.Units.SI.Area A_roof=108 "Area of roof";
 parameter Modelica.Units.SI.Length droof=0.16 "Thickness of roof";

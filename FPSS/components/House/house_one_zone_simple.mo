@@ -3,8 +3,7 @@ model house_one_zone_simple
   package MediumAir = AixLib.Media.Air "Medium model for air";
 
   replaceable parameter FPSS.Parameter.Building.Building_base
-    Parameter_building annotation(
-    Placement(transformation(origin = {130, 110}, extent = {{-10, -10}, {10, 10}}))) constrainedby FPSS.Parameter.Building.Building_base
+    Parameter_building                                                               constrainedby FPSS.Parameter.Building.Building_base
     annotation (choicesAllMatching=true, Placement(transformation(origin={0,50},
           extent={{-10,-10},{10,10}})));
 
