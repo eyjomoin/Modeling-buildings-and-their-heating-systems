@@ -11,7 +11,7 @@ model Input_weather_selfmade
   constant String temp_8 = "modelica://FPSS/data/selfmade/temperature_selfmade_8.txt";
   constant String extreme = "modelica://FPSS/data/selfmade/temperature_selfmade_extreme.txt";
   
-  constant String OL = "modelica://FPSS/data/selfmade/TRY_2012_OL.txt";
+  constant String OL = "modelica://FPSS/data/selfmade/TRY2015_converted_Jahr.txt";
 
   Modelica.Blocks.Sources.CombiTimeTable combiTimeTable(
     fileName=Modelica.Utilities.Files.loadResource(OL), tableName = "tab", tableOnFile = true,columns=1:2)                                                                                                                                                                                      annotation (
