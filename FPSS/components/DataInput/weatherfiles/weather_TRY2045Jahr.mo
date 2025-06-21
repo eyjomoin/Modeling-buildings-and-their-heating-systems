@@ -1,9 +1,9 @@
 within FPSS.components.DataInput.weatherfiles;
-record weather_gen_all_temp "Artificial sequence of all possible temperatures"
+record weather_TRY2045Jahr
   extends weather_base_const(
-  filename="modelica://FPSS/data/selfmade/temperature_selfmade_all_temp.txt"
+  filename="modelica://FPSS/data/selfmade/TRY2045_converted_Jahr.txt"
   );
   annotation (
       defaultComponentPrefixes = "parameter",
       defaultComponentName = "input_weather");
-end weather_gen_all_temp;
+end weather_TRY2045Jahr;
