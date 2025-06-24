@@ -55,6 +55,15 @@ model house_one_zone_simple_U
     T_start=Parameter_building.T_zone_start,
     b_adj=Parameter_building.b_soil) annotation (Placement(transformation(
           origin={-42,26}, extent={{-13,-12},{13,12}})));
+  Building_component.house_component_U window(
+    CA=Parameter_building.A_window,
+    Cd=Parameter_building.dWindow,
+    Ccp=Parameter_building.cpWindow,
+    Crho=Parameter_building.rhoWindow,
+    CU=Parameter_building.UWindow,
+    Ch=Parameter_building.hWindow,
+    T_start=Parameter_building.T_zone_start) annotation (Placement(
+        transformation(origin={-44,-2}, extent={{-13,-12},{13,12}})));
 equation
   connect(conv_R1, zon.heatPort) annotation (
     Line(points = {{-120.5, -60.5}, {112, -60.5}, {112, -59}}, color = {191, 0, 0}));
@@ -80,6 +89,12 @@ equation
     Line(points={{114,-34},{114,-59},{112,-59}},        color = {191, 0, 0}));
   connect(const_ground.y, ground.T_out) annotation (
     Line(points={{-95,36},{-55,36}},      color = {0, 0, 127}));
+  connect(T_ambb, window.T_out) annotation(
+    Line(points = {{-124, 100}, {-86, 100}, {-86, 8}, {-57, 8}}, color = {0, 0, 127}));
+  connect(rad_R1, window.rad) annotation(
+    Line(points = {{-120, 76}, {-90, 76}, {-90, -2}, {-57, -2}}));
+  connect(window.conv, zon.heatPort) annotation(
+    Line(points = {{-31, -8}, {0, -8}, {0, -58}, {112, -58}}, color = {191, 0, 0}));
   annotation (
     Icon(coordinateSystem(preserveAspectRatio = false, extent = {{-120, -120}, {140, 120}}), graphics={  Rectangle(fillColor = {85, 0, 127}, fillPattern = FillPattern.Solid, extent = {{-80, 54}, {80, -86}}), Polygon(origin = {-10, 84}, fillColor = {85, 0, 127}, fillPattern = FillPattern.Solid, points = {{-80, -30}, {100, -30}, {10, 30}, {-80, -30}, {-80, -30}}), Rectangle(origin = {51, -63}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-15, -23}, {15, 23}}), Rectangle(origin = {-39, 6}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-21, 18}, {21, -18}}), Rectangle(origin = {38, 6}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid, extent = {{-22, 18}, {22, -18}})}),
     Diagram(coordinateSystem(preserveAspectRatio = false, extent = {{-120, -120}, {140, 120}})),

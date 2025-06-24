@@ -32,6 +32,15 @@ parameter Modelica.Units.SI.CoefficientOfHeatTransfer Uroof=0.4 "Overall heat tr
 
 parameter Modelica.Units.SI.Temperature T_zone_start= 273.15+20 "Air and thermal mass starting temperature of the building";
 
+parameter Modelica.Units.SI.Area A_window=0;
+parameter Modelica.Units.SI.Length dWindow=0;
+parameter Modelica.Units.SI.CoefficientOfHeatTransfer hWindow=0;
+parameter Modelica.Units.SI.ThermalConductivity kWindow=0;
+parameter Modelica.Units.SI.Density rhoWindow=0; 
+parameter Modelica.Units.SI.SpecificHeatCapacity cpWindow=0;
+parameter Modelica.Units.SI.CoefficientOfHeatTransfer UWindow=0;
+
+
 annotation (
     defaultComponentPrefixes = "parameter",
     defaultComponentName = "Parameter_building");
