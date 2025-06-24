@@ -5,10 +5,9 @@ model one_zone
   components.TGA_all.TGA_one_zone_simple tGA_one_zone_simple(MediumWater=
         MediumWater, redeclare final FPSS.Parameter.TGA.TGA_modified      Parameter_TGA) annotation (Placement(transformation(origin={62.7133,-65.7147},
           extent={{-160.713,15.7147},{-110.712,37.7147}})));
-  components.House.house_one_zone_simple_U building_one_zone(redeclare final
-      FPSS.Parameter.Building.Building_modified Parameter_building) annotation (
+  components.House.house_one_zone_simple_U building_one_zone(redeclare FPSS.Parameter.Building.Building_2016_refurb Parameter_building) annotation (
      Placement(transformation(origin={14,-50}, extent={{12,-12},{52,28}})));
-  FPSS.components.DataInput.Selfmade_weather.Input_weather_choose DataInput(DeltaT = -2, redeclare FPSS.components.DataInput.weatherfiles.weather_TRY2015Jahr input_weather) annotation (
+  FPSS.components.DataInput.Selfmade_weather.Input_weather_choose DataInput(DeltaT = -2, redeclare FPSS.components.DataInput.weatherfiles.weather_TRY2015Somm input_weather) annotation (
     Placement(transformation(origin = {35.7674, 99.0233}, extent = {{-129.767, -49.0233}, {-67.7674, 12.9767}})));
 equation
   connect(building_one_zone.rad_R1, tGA_one_zone_simple.rad_R1) annotation (

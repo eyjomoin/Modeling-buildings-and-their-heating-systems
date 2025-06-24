@@ -19,6 +19,8 @@ model house_one_zone_simple_U
     Placement(transformation(origin = {-106, 36}, extent = {{-10, -10}, {10, 10}})));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_wall(unit = "W") = wall.R_cond_conv_e.port_a.Q_flow annotation (
     Placement(transformation(origin = {6, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {4, -98}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
+  Modelica.Blocks.Interfaces.RealOutput Q_loss_window(unit = "W") = window.R_cond_conv_e.port_a.Q_flow annotation (
+    Placement(transformation(origin = {128, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {4, -98}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_roof(unit = "W") = roof.R_cond_conv_e.port_a.Q_flow annotation (
     Placement(transformation(origin = {64, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-22, -98}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_ground(unit = "W") = ground.R_cond_conv_e.port_a.Q_flow annotation (
