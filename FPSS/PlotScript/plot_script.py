@@ -48,8 +48,8 @@ df = DyMat.DyMatFile(path_file)
 time = df.abscissa('building_one_zone.Q_loss_ground', valuesOnly=True)
 
 # We present on July 2nd, so I thought looking at that day could be fun
-fro = datetime.datetime(2015,7,1)
-to = datetime.datetime(2015,7,3)
+fro = datetime.datetime(2015,1,1)
+to = datetime.datetime(2015,1,2)
 # convert to how many seconds have passed since the start of that year
 fro_sec = int((fro-datetime.datetime(fro.year,1,1)).total_seconds())
 to_sec = int((to-datetime.datetime(to.year,1,1)).total_seconds())
@@ -95,6 +95,7 @@ if plot_heating_curve:
     plt.scatter(df["DataInput.T_amb_mod"][idx1:idx2]-273.15, df["tGA_one_zone_simple.SecondaryCircuit.ctr_HP.heatingCurve_2s.TSupSet"][idx1:idx2]-273.15,  label='Heating Curve')
     plt.xlabel("$T_{amb}$ [°C]")
     plt.ylabel("$T_{sup}$ [°C]")
+    plt.show()
 
 
 
@@ -142,16 +143,13 @@ if plot_controller:
     axs[2,2].set_xlabel(timeunit)
     axs[2,2].legend()    
     
-    
     # Set x-axis limits for all subplots
     for ax in axs.flat:
         ax.set_xlim([time[0], time[len(time)-1]])    
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    
     plt.show()
-    plt.get_current_fig_manager().window.showMaximized()
 
 
 
@@ -198,8 +196,7 @@ if plot_miscellaneous:
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    plt.get_current_fig_manager().window.showMaximized()
-
+    plt.show()
 
 
 if plot_HeatPump:
@@ -243,9 +240,7 @@ if plot_HeatPump:
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    plt.get_current_fig_manager().window.showMaximized()
-
-
+    plt.show()
 
 
 
@@ -292,3 +287,16 @@ if plot_building:
     # Layout so plots do not overlap
     fig.tight_layout()
     plt.get_current_fig_manager().window.showMaximized()
+
+
+# rectangular approximation of energy as integral of power over time, divide by 1000 to get kWh
+kWh_used = np.mean(df["tGA_one_zone_simple.HeatPump.P"])/1000*int((to-fro).total_seconds()/3600)
+
+# to scale the energy to the unit kWh per square meter of living area and year (see tabula), 
+# divide by the fraction of the year that was simulated and the area in m^2 (see modelica building file)
+floor_area = 74
+fractionOfYear_simulated = int((to-fro).total_seconds())/(365*24*60*60)
+kWh_scaled = kWh_used/(fractionOfYear_simulated*floor_area)
+
+print("Total kWh used in this period: ", kWh_used)
+print("kWh/(m^2*a): ", kWh_scaled)

@@ -1,5 +1,5 @@
 within FPSS.Parameter.Building;
-record Building_1977 "Modified parameter for the house"
+record Building_1948_refurb "Modified parameter for the house"
   extends Building_base(
   Vzone           = 365.17,
   T_zone_start    = 273.15+20,
@@ -11,7 +11,7 @@ record Building_1977 "Modified parameter for the house"
   kWall           = 0.133,
   rhoWall         = 485,
   cpWall          = 1000,
-  UWall           = 1.00,
+  UWall           = 0.25,
   
   A_ground        = 74.71,
   dground         = 0.3,
@@ -19,7 +19,7 @@ record Building_1977 "Modified parameter for the house"
   kground         = 2.3*0.2,
   rhoground       = 2400,
   cpground        = 880,
-  Uground         = 0.77,
+  Uground         = 0.28,
   b_soil          = 0.5,
   
   A_roof          = 108,
@@ -28,7 +28,7 @@ record Building_1977 "Modified parameter for the house"
   kroof           = 0.18,
   rhoroof         = 55,
   cproof          = 1450,
-  Uroof           = 0.50,
+  Uroof           = 0.41,
   
   A_window        = 2,
   dWindow         = 0.006,
@@ -36,8 +36,8 @@ record Building_1977 "Modified parameter for the house"
   kWindow         = 0.133,
   rhoWindow       = 485,
   cpWindow        = 1000,
-  UWindow         = 2.80);
+  UWindow         = 1.3);
   annotation (
       defaultComponentPrefixes = "parameter",
       defaultComponentName = "Parameter_building");
-end Building_1977;
+end Building_1948_refurb;

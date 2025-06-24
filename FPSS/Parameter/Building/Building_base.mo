@@ -4,6 +4,7 @@ extends Modelica.Icons.Record;
 
 parameter Modelica.Units.SI.Volume Vzone=365.17 "Volume of the air in the house";
 parameter Modelica.Units.SI.Temperature T_ground=273.15+10 "Temperature of the ground";
+parameter Modelica.Units.SI.Temperature T_zone_start= 273.15+20 "Air and thermal mass starting temperature of the building";
 
 parameter Modelica.Units.SI.Area A_wall=108.25 "Area of outer walls";
 parameter Modelica.Units.SI.Length dWall=0.365 "Thickness of outer Walls";
@@ -29,8 +30,6 @@ parameter Modelica.Units.SI.ThermalConductivity kroof=0.18 "roof thermal conduct
 parameter Modelica.Units.SI.Density rhoroof=55 "roof density";
 parameter Modelica.Units.SI.SpecificHeatCapacity cproof=1450 "roof specific heat capacity";
 parameter Modelica.Units.SI.CoefficientOfHeatTransfer Uroof=0.4 "Overall heat transfer coefficient of the roof";
-
-parameter Modelica.Units.SI.Temperature T_zone_start= 273.15+20 "Air and thermal mass starting temperature of the building";
 
 parameter Modelica.Units.SI.Area A_window=0;
 parameter Modelica.Units.SI.Length dWindow=0;
