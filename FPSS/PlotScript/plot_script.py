@@ -35,6 +35,7 @@ plot_controller=True
 plot_miscellaneous=True
 plot_building=True
 plot_HeatPump=True
+show = False
 
 ### get the file creation time
 timestamp = os.path.getmtime(path_file)
@@ -49,7 +50,7 @@ time = df.abscissa('building_one_zone.Q_loss_ground', valuesOnly=True)
 
 # We present on July 2nd, so I thought looking at that day could be fun
 fro = datetime.datetime(2015,1,1)
-to = datetime.datetime(2015,1,2)
+to = datetime.datetime(2015,12,31)
 # convert to how many seconds have passed since the start of that year
 fro_sec = int((fro-datetime.datetime(fro.year,1,1)).total_seconds())
 to_sec = int((to-datetime.datetime(to.year,1,1)).total_seconds())
@@ -67,10 +68,6 @@ if timeunit == "minutes":
     time = time / 60
 elif timeunit == "hours":
     time = time / 3600
-
-
-
-# print(d.names())
 
 
 def value_to_array(declaration,time, to_celsius=False, to_bar=False, to_kW=False):
@@ -149,7 +146,11 @@ if plot_controller:
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    plt.show()
+    fig.set_size_inches(19.2, 10.8)
+    plt.draw()
+    plt.savefig('controller.png')
+    if show:
+        plt.show()
 
 
 
@@ -196,7 +197,11 @@ if plot_miscellaneous:
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    plt.show()
+    fig.set_size_inches(19.2, 10.8)
+    plt.draw()
+    plt.savefig('misc.png')
+    if show: 
+        plt.show()
 
 
 if plot_HeatPump:
@@ -240,7 +245,11 @@ if plot_HeatPump:
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    plt.show()
+    fig.set_size_inches(19.2, 10.8)
+    plt.draw()
+    plt.savefig('hp.png')
+    if show: 
+        plt.show()
 
 
 
@@ -278,7 +287,6 @@ if plot_building:
     axs[1,1].set_xlabel(timeunit)
     axs[1,1].set_ylabel("$\dot{Q}_{radiative}$ [kW] (from radiator to component)")
     axs[1,1].legend()
-    
         
     # Set x-axis limits for all subplots
     for ax in axs.flat:
@@ -286,8 +294,12 @@ if plot_building:
     
     # Layout so plots do not overlap
     fig.tight_layout()
-    plt.get_current_fig_manager().window.showMaximized()
-
+    fig.set_size_inches(19.2, 10.8)
+    plt.draw()
+    plt.savefig('building.png')
+    if show: 
+        plt.show()
+    
 
 # rectangular approximation of energy as integral of power over time, divide by 1000 to get kWh
 kWh_used = np.mean(df["tGA_one_zone_simple.HeatPump.P"])/1000*int((to-fro).total_seconds()/3600)
@@ -298,5 +310,12 @@ floor_area = 74
 fractionOfYear_simulated = int((to-fro).total_seconds())/(365*24*60*60)
 kWh_scaled = kWh_used/(fractionOfYear_simulated*floor_area)
 
-print("Total kWh used in this period: ", kWh_used)
-print("kWh/(m^2*a): ", kWh_scaled)
+#print("Total kWh used in this period: ", kWh_used)
+print("kWh/(m^2*a): ", round(kWh_scaled,2))
+
+# Normalization
+lgr = round(sum(df["building_one_zone.Q_loss_ground"][idx1:idx2])/(fractionOfYear_simulated*floor_area),2)
+lwa = round(sum(df["building_one_zone.Q_loss_wall"][idx1:idx2])/(fractionOfYear_simulated*floor_area),2)
+lwi = round(sum(df["building_one_zone.Q_loss_window"][idx1:idx2])/(fractionOfYear_simulated*floor_area),2)
+lro = round(sum(df["building_one_zone.Q_loss_roof"][idx1:idx2])/(fractionOfYear_simulated*floor_area),2)
+print(f"[{lgr}, {lwa}, {lwi}, {lro}]")
