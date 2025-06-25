@@ -22,8 +22,9 @@ import datetime
 timeunit = 'hours'
 
 ### choose your .mat file
-path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
+#path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
 path_file="C:/Users/AO/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
+#path_file="/Users/laura/Documents/fps/workaround/one_zone_res.mat"
 
 
 ### by default all plots are disabled
@@ -31,12 +32,12 @@ plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPum
 
 ### choose your plots
 # plot_heating_curve=True
-plot_controller=True
-plot_miscellaneous=True
-plot_building=True
-plot_HeatPump=True
+plot_controller=False
+plot_miscellaneous=False
+plot_building=False
+plot_HeatPump=False
 plot_LossBar=False
-show = False
+show = True
 
 ### get the file creation time
 timestamp = os.path.getmtime(path_file)
@@ -176,6 +177,7 @@ if plot_miscellaneous:
     axs[1,0].plot(time, df["building_one_zone.Q_loss_ground"][idx1:idx2]/1000, label='$\dot{Q}_{loss,ground}$ [kW]')
     axs[1,0].plot(time, df["building_one_zone.Q_loss_roof"][idx1:idx2]/1000, label='$\dot{Q}_{loss,roof}$ [kW]')
     axs[1,0].plot(time, df["building_one_zone.Q_loss_wall"][idx1:idx2]/1000, label='$\dot{Q}_{loss,walls}$ [kW]')
+ #   axs[1,0].plot(time, df["building_one_zone.Q_loss_window"][idx1:idx2]/1000, label='$\dot{Q}_{loss,window}$ [kW]')    
     axs[1,0].plot(time, df["building_one_zone.Q_loss_total"][idx1:idx2]/1000, label='$\dot{Q}_{loss,total}$ [kW]')
     axs[1,0].set_xlabel(timeunit)
     axs[1,0].legend()
@@ -189,6 +191,7 @@ if plot_miscellaneous:
     axs[1,2].plot(time, df['building_one_zone.ground.Cap.T'][idx1:idx2]-273.15, label='$T_{baseplate}$ [°C]') 
     axs[1,2].plot(time, df['building_one_zone.wall.Cap.T'][idx1:idx2]-273.15, label='$T_{walls}$ [°C]') 
     axs[1,2].plot(time, df["building_one_zone.roof.Cap.T"][idx1:idx2]-273.15, label='$T_{roof}$ [°C]')
+ #   axs[1,2].plot(time, df["building_one_zone.window.Cap.T"][idx1:idx2]-273.15, label='$T_{window}$ [°C]')   
     axs[1,2].set_xlabel(timeunit)
     axs[1,2].legend()
     
@@ -263,6 +266,7 @@ if plot_building:
     axs[0,0].plot(time, df['building_one_zone.Q_loss_ground'][idx1:idx2]/1000, label='ground')        
     axs[0,0].plot(time, df['building_one_zone.Q_loss_wall'][idx1:idx2]/1000, label='wall')
     axs[0,0].plot(time, df['building_one_zone.Q_loss_roof'][idx1:idx2]/1000, label='roof')
+#    axs[0,0].plot(time, df['building_one_zone.Q_loss_window'][idx1:idx2]/1000, label='window')
     axs[0,0].plot(time, df['building_one_zone.Q_loss_total'][idx1:idx2]/1000, label='total')
     axs[0,0].set_ylabel("$\dot{Q}_{loss}$ [kW]")
     axs[0,0].legend()
@@ -270,6 +274,7 @@ if plot_building:
     axs[0,1].plot(time, df["building_one_zone.ground.Cap.T"][idx1:idx2]-273.15, label='groundplate')
     axs[0,1].plot(time, df["building_one_zone.wall.Cap.T"][idx1:idx2]-273.15, label='wall')
     axs[0,1].plot(time, df["building_one_zone.roof.Cap.T"][idx1:idx2]-273.15, label='roof')
+#    axs[0,1].plot(time, df["building_one_zone.window.Cap.T"][idx1:idx2]-273.15, label='window')
     axs[0,1].plot(time, df["tGA_one_zone_simple.SecondaryCircuit.room_tubing.radiator.heatPortRad.T"][idx1:idx2]-273.15, label='radiative')
     axs[0,1].plot(time, df["building_one_zone.senTemZonAir.T"][idx1:idx2]-273.15, label='air room')
     axs[0,1].set_ylabel("$T$ [°C]")
@@ -278,6 +283,7 @@ if plot_building:
     axs[1,0].plot(time, df["building_one_zone.ground.R_cond_conv_e.port_a.Q_flow"][idx1:idx2]/1000, label='groundplate')
     axs[1,0].plot(time, df["building_one_zone.wall.R_cond_conv_e.port_a.Q_flow"][idx1:idx2]/1000, label='wall')
     axs[1,0].plot(time, df["building_one_zone.roof.R_cond_conv_e.port_a.Q_flow"][idx1:idx2]/1000, label='roof')
+#    axs[1,0].plot(time, df["building_one_zone.window.R_cond_conv_e.port_a.Q_flow"][idx1:idx2]/1000, label='window')
     axs[1,0].set_xlabel(timeunit)
     axs[1,0].set_ylabel("$\dot{Q}_{convective}$ [kW] (from air to component)")
     axs[1,0].legend()
@@ -285,6 +291,7 @@ if plot_building:
     axs[1,1].plot(time, df["building_one_zone.ground.res_rad.port_a.Q_flow"][idx1:idx2]/1000, label='groundplate')
     axs[1,1].plot(time, df["building_one_zone.wall.res_rad.port_a.Q_flow"][idx1:idx2]/1000, label='wall')
     axs[1,1].plot(time, df["building_one_zone.roof.res_rad.port_a.Q_flow"][idx1:idx2]/1000, label='roof')
+#    axs[1,1].plot(time, df["building_one_zone.window.res_rad.port_a.Q_flow"][idx1:idx2]/1000, label='window')
     axs[1,1].set_xlabel(timeunit)
     axs[1,1].set_ylabel("$\dot{Q}_{radiative}$ [kW] (from radiator to component)")
     axs[1,1].legend()
@@ -328,8 +335,8 @@ if plot_LossBar:
     A_ground = 100
     A_wall   = 100
     A_roof   = 100
-    #A_window= 100
-    A_total  = A_ground + A_wall + A_roof
+    A_window= 100
+    A_total  = A_ground + A_wall + A_roof + A_window
     
     # time
     if timeunit == "seconds":
@@ -346,20 +353,20 @@ if plot_LossBar:
     E_ground = np.sum(df["building_one_zone.Q_loss_ground"] * dt)
     E_wall = np.sum(df["building_one_zone.Q_loss_wall"] * dt)
     E_roof = np.sum(df["building_one_zone.Q_loss_roof"] * dt)
-    #E_window = np.sum(df["building_one_zone.Q_loss_window"] * dt)
+    E_window = np.sum(df["building_one_zone.Q_loss_window"] * dt)
     
     # in kWh/(m^2 * a)
     Q_ground_unit = (E_ground/1000)/ A_ground / duration_years
     Q_wall_unit = (E_wall/1000)/ A_wall / duration_years
     Q_roof_unit = (E_roof/1000)/ A_roof / duration_years
-    #Q_window_unit = (E_window/1000)/ A_window / duration_years
+    Q_window_unit = (E_window/1000)/ A_window / duration_years
     
     # actual plot
     x = ["heating loss"]
     plt.bar(x, Q_ground_unit, color='r')
     plt.bar(x, Q_wall_unit, bottom=Q_ground_unit, color='b')
     plt.bar(x, Q_roof_unit, bottom= Q_ground_unit+Q_wall_unit, color='g')
-    #plt.bar(x, Q_window, bottom = Q_ground_unit+Q_wall_unit+Q_roof_unit,color='y')
+    plt.bar(x, Q_window_unit, bottom = Q_ground_unit+Q_wall_unit+Q_roof_unit,color='y')
     plt.ylabel("heating loss in kWh/(m^2 * a)")
-    plt.legend(["ground","wall","roof"]) #add window
+    plt.legend(["ground","wall","roof", "window"])
     plt.show()
