@@ -35,6 +35,7 @@ plot_controller=True
 plot_miscellaneous=True
 plot_building=True
 plot_HeatPump=True
+plot_LossBar=False
 show = False
 
 ### get the file creation time
@@ -319,3 +320,46 @@ lwa = round(sum(df["building_one_zone.Q_loss_wall"][idx1:idx2])/(fractionOfYear_
 lwi = round(sum(df["building_one_zone.Q_loss_window"][idx1:idx2])/(fractionOfYear_simulated*floor_area),2)
 lro = round(sum(df["building_one_zone.Q_loss_roof"][idx1:idx2])/(fractionOfYear_simulated*floor_area),2)
 print(f"[{lgr}, {lwa}, {lwi}, {lro}]")
+
+
+# (not finalized) plotting the loss bar like chart1 on Tabula
+if plot_LossBar:
+    # enter A of house here:
+    A_ground = 100
+    A_wall   = 100
+    A_roof   = 100
+    #A_window= 100
+    A_total  = A_ground + A_wall + A_roof
+    
+    # time
+    if timeunit == "seconds":
+        dt = 1
+    elif timeunit == "minutes":
+        dt = 60
+    elif timeunit == "hours":
+        dt = 3600
+    
+    duration_years = time[-1] / (3600*24*365)
+ 
+    
+    # energy loss = integral of P(t) over dt = sum(P*dt)
+    E_ground = np.sum(df["building_one_zone.Q_loss_ground"] * dt)
+    E_wall = np.sum(df["building_one_zone.Q_loss_wall"] * dt)
+    E_roof = np.sum(df["building_one_zone.Q_loss_roof"] * dt)
+    #E_window = np.sum(df["building_one_zone.Q_loss_window"] * dt)
+    
+    # in kWh/(m^2 * a)
+    Q_ground_unit = (E_ground/1000)/ A_ground / duration_years
+    Q_wall_unit = (E_wall/1000)/ A_wall / duration_years
+    Q_roof_unit = (E_roof/1000)/ A_roof / duration_years
+    #Q_window_unit = (E_window/1000)/ A_window / duration_years
+    
+    # actual plot
+    x = ["heating loss"]
+    plt.bar(x, Q_ground_unit, color='r')
+    plt.bar(x, Q_wall_unit, bottom=Q_ground_unit, color='b')
+    plt.bar(x, Q_roof_unit, bottom= Q_ground_unit+Q_wall_unit, color='g')
+    #plt.bar(x, Q_window, bottom = Q_ground_unit+Q_wall_unit+Q_roof_unit,color='y')
+    plt.ylabel("heating loss in kWh/(m^2 * a)")
+    plt.legend(["ground","wall","roof"]) #add window
+    plt.show()
