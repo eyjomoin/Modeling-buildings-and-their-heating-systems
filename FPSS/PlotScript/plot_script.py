@@ -21,6 +21,8 @@ import datetime
 # timeunit = 'minutes'
 timeunit = 'hours'
 
+floor_reference_area = 187
+
 ### choose your .mat file
 #path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
 path_file="C:/Users/AO/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
@@ -28,14 +30,14 @@ path_file="C:/Users/AO/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zo
 
 
 ### by default all plots are disabled
-plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPump=False
+plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPump=plotLossBar=False
 
 ### choose your plots
 # plot_heating_curve=True
-plot_controller=False
-plot_miscellaneous=False
-plot_building=False
-plot_HeatPump=False
+plot_controller=True
+plot_miscellaneous=True
+plot_building=True
+plot_HeatPump=True
 plot_LossBar=True
 show = True
 save = False
@@ -53,7 +55,7 @@ time = df.abscissa('building_one_zone.Q_loss_ground', valuesOnly=True)
 
 # We present on July 2nd, so I thought looking at that day could be fun
 #                       yyyy,m,d
-fro = datetime.datetime(2015,1,3)
+fro = datetime.datetime(2015,1,1)
 to = datetime.datetime(2015,3,30)
 # convert to how many seconds have passed since the start of that year
 fro_sec = int((fro-datetime.datetime(fro.year,1,1)).total_seconds())
@@ -328,14 +330,10 @@ A_total  = A_ground + A_wall + A_roof + A_window
 
 # Conversion from seconds that were simulated to h
 dt = int((to-fro).total_seconds()/3600)
+fractionOfYear_simulated = dt/(200*24)
 
 # Integral of power over dt, divide by 1000 to get to kWh
 kWh_used = np.mean(df["tGA_one_zone_simple.HeatPump.P"][idx1:idx2])*dt/1000
-
-# to scale the energy to the unit kWh per square meter of living area and year (see tabula), 
-# divide by the fraction of the year that was simulated and the area in m^2 (see modelica building file)
-fractionOfYear_simulated = dt/(365*24)
-kWh_scaled = kWh_used/(fractionOfYear_simulated*A_ground)
 
 
 # (not finalized) plotting the loss bar like chart1 on Tabula
@@ -347,10 +345,10 @@ if plot_LossBar:
     E_window = np.mean(df["building_one_zone.Q_loss_window"][idx1:idx2])*dt / 1000
     
     # in kWh/(m^2 * a)
-    Q_ground_unit = E_ground / A_ground / fractionOfYear_simulated
-    Q_wall_unit = E_wall / A_ground / fractionOfYear_simulated
-    Q_roof_unit = E_roof / A_ground / fractionOfYear_simulated
-    Q_window_unit = E_window / A_ground / fractionOfYear_simulated
+    Q_ground_unit = E_ground / floor_reference_area / fractionOfYear_simulated
+    Q_wall_unit = E_wall / floor_reference_area / fractionOfYear_simulated
+    Q_roof_unit = E_roof / floor_reference_area / fractionOfYear_simulated
+    Q_window_unit = E_window / floor_reference_area / fractionOfYear_simulated
     
     # actual plot
     x = ["heating loss"]
@@ -360,8 +358,10 @@ if plot_LossBar:
     plt.bar(x, Q_roof_unit, bottom=Q_ground_unit+Q_wall_unit+Q_window_unit, color='r')
     
     plt.ylabel("heating loss in kWh/(m^2 * a)")
-    plt.legend(["ground","wall","roof", "window"])
+    plt.legend(["ground","window","wall","roof"])
     plt.show()
 
 #print("Total electrical kWh used in this period: ", kWh_used)
-print("kWh/(m^2*a): ", round(kWh_scaled,2))
+print("kWh used in sim:", round(kWh_used,2))
+print("kWh per year:", round(kWh_used/fractionOfYear_simulated))
+print("kWh/(m^2*a):", round(kWh_used/fractionOfYear_simulated/A_ground,2))
