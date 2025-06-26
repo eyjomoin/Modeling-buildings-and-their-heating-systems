@@ -21,7 +21,7 @@ import datetime
 # timeunit = 'minutes'
 timeunit = 'hours'
 
-floor_reference_area = 187
+floor_reference_area = 173
 
 ### choose your .mat file
 #path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
@@ -40,7 +40,7 @@ plot_building=True
 plot_HeatPump=True
 plot_LossBar=True
 show = True
-save = False
+save = True
 
 ### get the file creation time
 timestamp = os.path.getmtime(path_file)
@@ -56,7 +56,7 @@ time = df.abscissa('building_one_zone.Q_loss_ground', valuesOnly=True)
 # We present on July 2nd, so I thought looking at that day could be fun
 #                       yyyy,m,d
 fro = datetime.datetime(2015,1,1)
-to = datetime.datetime(2015,3,30)
+to = datetime.datetime(2015,3,1)
 # convert to how many seconds have passed since the start of that year
 fro_sec = int((fro-datetime.datetime(fro.year,1,1)).total_seconds())
 to_sec = int((to-datetime.datetime(to.year,1,1)).total_seconds())

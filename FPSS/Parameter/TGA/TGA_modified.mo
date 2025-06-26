@@ -1,7 +1,7 @@
 within FPSS.Parameter.TGA;
 record TGA_modified "Modified parameter for the house"
   extends TGA_base(
-  scaling_factor_HP=0.5,
+  scaling_factor_HP=2,
   
   mflow_prim_min=0.01,
   mflow_prim_max=1,
@@ -21,8 +21,8 @@ record TGA_modified "Modified parameter for the house"
   p_prim=200000,
   p_sec=200000,
   
-  T_HC_1_amb=273.15-10,
-  T_HC_1_sup=273.15+50,
+  T_HC_1_amb=273.15-20,
+  T_HC_1_sup=273.15+70,
   T_HC_2_amb=273.15+20,
   T_HC_2_sup=273.15+20  
   
