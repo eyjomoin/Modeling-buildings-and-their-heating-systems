@@ -32,8 +32,8 @@ plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPum
 
 ### choose your plots
 # plot_heating_curve=True
-plot_controller=True
-plot_miscellaneous=True
+plot_controller=False
+plot_miscellaneous=False
 plot_building=False
 plot_HeatPump=False
 plot_LossBar=True
@@ -348,16 +348,17 @@ if plot_LossBar:
     
     # in kWh/(m^2 * a)
     Q_ground_unit = E_ground / A_ground / fractionOfYear_simulated
-    Q_wall_unit = E_wall / A_wall / fractionOfYear_simulated
-    Q_roof_unit = E_roof / A_roof / fractionOfYear_simulated
-    Q_window_unit = E_window / A_window / fractionOfYear_simulated
+    Q_wall_unit = E_wall / A_ground / fractionOfYear_simulated
+    Q_roof_unit = E_roof / A_ground / fractionOfYear_simulated
+    Q_window_unit = E_window / A_ground / fractionOfYear_simulated
     
     # actual plot
     x = ["heating loss"]
-    plt.bar(x, Q_ground_unit, color='r')
-    plt.bar(x, Q_wall_unit, bottom=Q_ground_unit, color='b')
-    plt.bar(x, Q_roof_unit, bottom=Q_ground_unit+Q_wall_unit, color='g')
-    plt.bar(x, Q_window_unit, bottom=Q_ground_unit+Q_wall_unit+Q_roof_unit,color='y')
+    plt.bar(x, Q_ground_unit, color=[0.1,1,0.5])
+    plt.bar(x, Q_window_unit, bottom=Q_ground_unit,color=[0.5, 0.3, 0.1])
+    plt.bar(x, Q_wall_unit, bottom=Q_ground_unit+Q_window_unit, color=[0.2,0.8,1])
+    plt.bar(x, Q_roof_unit, bottom=Q_ground_unit+Q_wall_unit+Q_window_unit, color='r')
+    
     plt.ylabel("heating loss in kWh/(m^2 * a)")
     plt.legend(["ground","wall","roof", "window"])
     plt.show()

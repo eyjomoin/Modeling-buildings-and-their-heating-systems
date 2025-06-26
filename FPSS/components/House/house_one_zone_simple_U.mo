@@ -25,7 +25,7 @@ model house_one_zone_simple_U
     Placement(transformation(origin = {64, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-22, -98}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Modelica.Blocks.Interfaces.RealOutput Q_loss_ground(unit = "W") = ground.R_cond_conv_e.port_a.Q_flow annotation (
     Placement(transformation(origin = {-36, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {-50, -98}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
-  Modelica.Blocks.Interfaces.RealOutput Q_loss_total(unit = "W") = Q_loss_wall + Q_loss_roof + Q_loss_ground "total heat loss of the building" annotation (
+  Modelica.Blocks.Interfaces.RealOutput Q_loss_total(unit = "W") = Q_loss_wall + Q_loss_roof + Q_loss_ground + Q_loss_window "total heat loss of the building" annotation (
     Placement(transformation(origin = {112, -130}, extent = {{-10, -10}, {10, 10}}, rotation = 270), iconTransformation(origin = {34, -98}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));
   Modelica.Blocks.Interfaces.RealInput T_ambb(unit = "K") annotation (
     Placement(transformation(origin = {-124, 100}, extent = {{10, -10}, {-10, 10}}, rotation = 180), iconTransformation(origin = {0, 130}, extent = {{10, -10}, {-10, 10}}, rotation = 90)));

@@ -34,7 +34,7 @@ record Building_2016_refurb "Modified parameter for the house"
   dWindow         = 0.006,
   hWindow         = 7.69,
   kWindow         = 0.133,
-  rhoWindow       = 485,
+  rhoWindow       = 2500,
   cpWindow        = 1000,
   UWindow         = 1.10);
   annotation (
