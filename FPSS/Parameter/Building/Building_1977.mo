@@ -1,11 +1,11 @@
 within FPSS.Parameter.Building;
 record Building_1977 "Modified parameter for the house"
   extends Building_base(
-  Vzone           = 365.17,
+  Vzone           = 392.9,
   T_zone_start    = 273.15+20,
   T_ground        = 273.15+2,
   
-  A_wall          = 106.25,
+  A_wall          = 177.6,
   dWall           = 0.365,
   hWall           = 7.69,
   kWall           = 0.133,
@@ -13,7 +13,7 @@ record Building_1977 "Modified parameter for the house"
   cpWall          = 1000,
   UWall           = 1.00,
   
-  A_ground        = 74.71,
+  A_ground        = 78.3,
   dground         = 0.3,
   hground         = 5.88,
   kground         = 2.3*0.2,
@@ -22,7 +22,7 @@ record Building_1977 "Modified parameter for the house"
   Uground         = 0.77,
   b_soil          = 0.5,
   
-  A_roof          = 108,
+  A_roof          = 183.1,
   droof           = 0.16,
   hroof           = 10,
   kroof           = 0.18,
@@ -30,7 +30,7 @@ record Building_1977 "Modified parameter for the house"
   cproof          = 1450,
   Uroof           = 0.50,
   
-  A_window        = 2,
+  A_window        = 34.2,
   dWindow         = 0.006,
   hWindow         = 7.69,
   kWindow         = 0.133,
