@@ -3,7 +3,7 @@ record Building_2016_refurb "Modified parameter for the house"
   extends Building_base(
   Vzone           = 590.8,
   T_zone_start    = 273.15+20,
-  T_ground        = 273.15+2,
+  T_ground        = 273.15+10,
   
   A_wall          = 277.6,
   dWall           = 0.365,
