@@ -21,7 +21,7 @@ import datetime
 # timeunit = 'minutes'
 timeunit = 'hours'
 
-floor_reference_area = 173
+floor_reference_area = 187
 
 ### choose your .mat file
 #path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
@@ -40,7 +40,7 @@ plot_building=True
 plot_HeatPump=True
 plot_LossBar=True
 show = True
-save = True
+save = False
 
 ### get the file creation time
 timestamp = os.path.getmtime(path_file)
@@ -364,4 +364,4 @@ if plot_LossBar:
 #print("Total electrical kWh used in this period: ", kWh_used)
 print("kWh used in sim:", round(kWh_used,2))
 print("kWh per year:", round(kWh_used/fractionOfYear_simulated))
-print("kWh/(m^2*a):", round(kWh_used/fractionOfYear_simulated/A_ground,2))
+print("kWh/(m^2*a):", round(kWh_used/fractionOfYear_simulated/floor_reference_area,2))
