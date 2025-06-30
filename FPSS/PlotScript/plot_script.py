@@ -33,11 +33,11 @@ save = show = False
 
 ### choose your plots
 #plot_heating_curve=True
-#plot_controller=True
-#plot_miscellaneous=True
-#plot_building=True
-#plot_HeatPump=True
-#save = True
+plot_controller=True
+plot_miscellaneous=True
+plot_building=True
+plot_HeatPump=True
+save = True
 
 plot_LossBar=True
 show = True
