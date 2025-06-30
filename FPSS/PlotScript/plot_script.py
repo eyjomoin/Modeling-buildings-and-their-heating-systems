@@ -33,13 +33,15 @@ save = show = False
 
 ### choose your plots
 # plot_heating_curve=True
-plot_controller=True
-plot_miscellaneous=True
-plot_building=True
-plot_HeatPump=True
+#plot_controller=True
+#plot_miscellaneous=True
+#plot_building=True
+#plot_HeatPump=True
+#save = True
+
 plot_LossBar=True
 show = True
-save = True
+
 
 ### get the file creation time
 timestamp = os.path.getmtime(path_file)
@@ -376,7 +378,8 @@ if plot_LossBar:
     Q_wall_unit = E_wall / floor_reference_area
     Q_roof_unit = E_roof / floor_reference_area
     Q_window_unit = E_window / floor_reference_area
-    
+    Q_total_unit = Q_ground_unit + Q_wall_unit + Q_window_unit + Q_roof_unit
+
     # actual plot 
     plt.figure()
     plt.title("Energy demand during heating season, normalized to floor area")
@@ -405,8 +408,5 @@ if plot_LossBar:
     plt.legend(["ground","window","wall","roof","$P_{el}$","$Q_{borehole}$"])
     plt.show()
     
-
-#print("Total electrical kWh used in this period: ", kWh_used)
-print("kWh used in sim:", round(kWh_used,2))
-print("kWh per year:", round(kWh_used/fractionOfYear_simulated))
-print("kWh/(m^2*a):", round(kWh_used/fractionOfYear_simulated/floor_reference_area,2))
+print("Electrical kWh used in heating period:", round(kWh_used_norm,2))
+print("To satisfy heating demand in kWh/(m^2*a):", round(Q_total_unit,2))
