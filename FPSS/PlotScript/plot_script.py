@@ -34,10 +34,10 @@ save = show = False
 ### choose your plots
 #plot_heating_curve=True
 plot_controller=True
-plot_miscellaneous=True
+#plot_miscellaneous=True
 plot_building=True
-plot_HeatPump=True
-save = True
+#plot_HeatPump=True
+#save = True
 
 plot_LossBar=True
 show = True
@@ -368,10 +368,10 @@ if plot_building:
 
 # (not finalized) plotting the loss bar like chart1 on Tabula
 if plot_LossBar:       
-    E_ground = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_ground"], ind2,ind1)).sum()/1000
-    E_wall = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_wall"], ind2,ind1)).sum()/1000
-    E_window = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_window"], ind2,ind1)).sum()/1000
-    E_roof = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_roof"], ind2,ind1)).sum()/1000
+    E_ground = (deltatime_heating_period*np.maximum(invslice(df["building_one_zone.Q_loss_ground"], ind2,ind1),0)).sum()/1000
+    E_wall = (deltatime_heating_period*np.maximum(invslice(df["building_one_zone.Q_loss_wall"], ind2,ind1),0)).sum()/1000
+    E_window = (deltatime_heating_period*np.maximum(invslice(df["building_one_zone.Q_loss_window"], ind2,ind1),0)).sum()/1000
+    E_roof = (deltatime_heating_period*np.maximum(invslice(df["building_one_zone.Q_loss_roof"], ind2,ind1),0)).sum()/1000
     
     # in kWh/(m^2 * a)
     Q_ground_unit = E_ground / floor_reference_area
