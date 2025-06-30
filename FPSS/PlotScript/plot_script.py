@@ -32,12 +32,12 @@ plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPum
 save = show = False
 
 ### choose your plots
-plot_heating_curve=True
-plot_controller=True
-plot_miscellaneous=True
-plot_building=True
-plot_HeatPump=True
-save = True
+#plot_heating_curve=True
+#plot_controller=True
+#plot_miscellaneous=True
+#plot_building=True
+#plot_HeatPump=True
+#save = True
 
 plot_LossBar=True
 show = True
@@ -408,5 +408,5 @@ if plot_LossBar:
     plt.legend(["ground","window","wall","roof","$P_{el}$","$Q_{borehole}$"])
     plt.show()
     
-print("Electrical kWh used in heating period:", round(kWh_used_norm,2))
+print("Electrical kWh used in heating period:", round(kWh_used,2))
 print("To satisfy heating demand in kWh/(m^2*a):", round(Q_total_unit,2))
