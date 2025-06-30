@@ -21,8 +21,6 @@ import datetime
 # timeunit = 'minutes'
 timeunit = 'hours'
 
-floor_reference_area = 187
-
 ### choose your .mat file
 #path_file="C:/Users/hart_t1/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
 path_file="C:/Users/AO/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zone/one_zone_res.mat"
@@ -31,6 +29,7 @@ path_file="C:/Users/AO/AppData/Local/Temp/OpenModelica/OMEdit/FPSS.System.one_zo
 
 ### by default all plots are disabled
 plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPump=plotLossBar=False
+save = show = False
 
 ### choose your plots
 # plot_heating_curve=True
@@ -53,7 +52,6 @@ df = DyMat.DyMatFile(path_file)
 # use datetime to slice it to the period we care about. 
 time = df.abscissa('building_one_zone.Q_loss_ground', valuesOnly=True)
 
-# We present on July 2nd, so I thought looking at that day could be fun
 #                       yyyy,m,d
 fro = datetime.datetime(2015,1,1)
 to = datetime.datetime(2015,12,30)
@@ -74,6 +72,54 @@ if timeunit == "minutes":
     time = time / 60
 elif timeunit == "hours":
     time = time / 3600
+
+# I stored the actual liveable area in the building parameter files
+floor_reference_area = df["building_one_zone.Parameter_building.A_floor_reference_area"][0]
+
+# Additionally, you can choose to ignore the summer and focus only on the heating period. 
+# It starts on October 1 and ends on April 30. If you don't want to ignore this period, set
+# start and end to the same date (any date). 
+heatstart = datetime.datetime(2015,10,1)
+heatend = datetime.datetime(2015,4,30)
+# convert date to seconds
+hs_sec = int((heatstart-datetime.datetime(heatstart.year,1,1)).total_seconds())
+he_sec = int((heatend-datetime.datetime(heatend.year,1,1)).total_seconds())
+# find which index corresponds to this many seconds having passed
+ind1 = np.argmax(time_np >= hs_sec) # start of heat
+ind2 = np.argmax(time_np >= he_sec) # end of heat 
+
+# very inefficient function for what I call an "inverse slice". I don't want to 
+# slice from April 30th to October 1st, no, I want the opposite, up to April 30th 
+# and then starting again at October 1st. This way, only the heating period of any 
+# array that is passed is returned. 
+def invslice(lst, end_of_heat, start_of_heat):
+    lst = list(lst)
+    a = lst[:end_of_heat]
+    b = lst[start_of_heat:]
+    a.extend(b)
+    return np.array(a)
+
+# Thanks Thilo for the idea: 
+timeh = df.abscissa('building_one_zone.Q_loss_ground', valuesOnly=True) / 3600 # time in hours
+deltatime=np.ediff1d(timeh, to_begin=0) # deltatime in hours. 
+
+# Only look at hours during heating period
+deltatime_heating_period = invslice(deltatime,ind2,ind1)
+
+# Calculate average COP as heat the HP delivers divided by energy the compressor used
+total_energy_compressor = (deltatime_heating_period*invslice(df["tGA_one_zone_simple.HeatPump.P"],ind2,ind1)).sum() / 1000 # in kWh
+total_energy_condenser = (deltatime_heating_period*invslice(df["tGA_one_zone_simple.HeatPump.QCon_flow"],ind2,ind1)).sum() / 1000 # in kWh
+COP_mean_heating_period=total_energy_condenser/total_energy_compressor
+# and for the entire year:
+COP_mean = ((deltatime*df["tGA_one_zone_simple.HeatPump.P"]).sum() / 1000) / ((deltatime*df["tGA_one_zone_simple.HeatPump.QCon_flow"]).sum() / 1000)
+
+# the bar of all heat losses needs to be the same height as all the energy that went into the house, namely
+# the electrical energy of the HP plus the energy we "stole" from the ground. 
+# Variables storing the energy gained during the heating period in total and normalized to floor area
+kWh_used = (deltatime_heating_period*invslice(df["tGA_one_zone_simple.HeatPump.P"],ind2,ind1)).sum()/1000
+kWh_borehole = (deltatime_heating_period*invslice(df["tGA_one_zone_simple.Q_eva_pos.x_out"],ind2,ind1)).sum()/1000
+kWh_used_norm = kWh_used / floor_reference_area
+kWh_borehole_norm = kWh_borehole / floor_reference_area
 
 
 def value_to_array(declaration,time, to_celsius=False, to_bar=False, to_kW=False):
@@ -318,48 +364,47 @@ if plot_building:
     
 
 
-
-
-# ENERGY
-
-A_ground = df["building_one_zone.ground.CA"][0]
-A_wall   = df["building_one_zone.wall.CA"][0]
-A_roof   = df["building_one_zone.roof.CA"][0]
-A_window = df["building_one_zone.window.CA"][0]
-A_total  = A_ground + A_wall + A_roof + A_window
-
-# Conversion from seconds that were simulated to h
-dt = int((to-fro).total_seconds()/3600)
-fractionOfYear_simulated = dt/(200*24)
-
-# Integral of power over dt, divide by 1000 to get to kWh
-kWh_used = np.mean(df["tGA_one_zone_simple.HeatPump.P"][idx1:idx2])*dt/1000
-
-
 # (not finalized) plotting the loss bar like chart1 on Tabula
-if plot_LossBar:   
-    # energy loss = integral of P(t) over dt = sum(P*dt)
-    E_ground = np.mean(df["building_one_zone.Q_loss_ground"][idx1:idx2])*dt / 1000
-    E_wall = np.mean(df["building_one_zone.Q_loss_wall"][idx1:idx2])*dt / 1000
-    E_roof = np.mean(df["building_one_zone.Q_loss_roof"][idx1:idx2])*dt / 1000
-    E_window = np.mean(df["building_one_zone.Q_loss_window"][idx1:idx2])*dt / 1000
+if plot_LossBar:       
+    E_ground = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_ground"], ind2,ind1)).sum()/1000
+    E_wall = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_wall"], ind2,ind1)).sum()/1000
+    E_window = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_window"], ind2,ind1)).sum()/1000
+    E_roof = (deltatime_heating_period*invslice(df["building_one_zone.Q_loss_roof"], ind2,ind1)).sum()/1000
     
     # in kWh/(m^2 * a)
-    Q_ground_unit = E_ground / floor_reference_area / fractionOfYear_simulated
-    Q_wall_unit = E_wall / floor_reference_area / fractionOfYear_simulated
-    Q_roof_unit = E_roof / floor_reference_area / fractionOfYear_simulated
-    Q_window_unit = E_window / floor_reference_area / fractionOfYear_simulated
+    Q_ground_unit = E_ground / floor_reference_area
+    Q_wall_unit = E_wall / floor_reference_area
+    Q_roof_unit = E_roof / floor_reference_area
+    Q_window_unit = E_window / floor_reference_area
     
-    # actual plot
-    x = ["heating loss"]
-    plt.bar(x, Q_ground_unit, color=[0.1,1,0.5])
-    plt.bar(x, Q_window_unit, bottom=Q_ground_unit,color=[0.5, 0.3, 0.1])
-    plt.bar(x, Q_wall_unit, bottom=Q_ground_unit+Q_window_unit, color=[0.2,0.8,1])
-    plt.bar(x, Q_roof_unit, bottom=Q_ground_unit+Q_wall_unit+Q_window_unit, color='r')
+    # actual plot 
+    plt.figure()
+    plt.title("Energy demand during heating season, normalized to floor area")
+    plt.bar(["heat loss"], Q_ground_unit, color=[0.1,1,0.5])
+    plt.bar(["heat loss"], Q_window_unit, bottom=Q_ground_unit,color=[0.5, 0.3, 0.1])
+    plt.bar(["heat loss"], Q_wall_unit, bottom=Q_ground_unit+Q_window_unit, color=[0.2,0.8,1])
+    plt.bar(["heat loss"], Q_roof_unit, bottom=Q_ground_unit+Q_wall_unit+Q_window_unit, color='r')
     
-    plt.ylabel("heating loss in kWh/(m^2 * a)")
-    plt.legend(["ground","window","wall","roof"])
+    plt.bar(["heat gains"],kWh_used_norm)
+    plt.bar(["heat gains"],kWh_borehole_norm,bottom=kWh_used_norm)
+
+    plt.ylabel("heat in $\\frac{kWh}{m^2 \cdot a}$")
+    plt.legend(["ground","window","wall","roof","$P_{el}$","$Q_{borehole}$"])
     plt.show()
+
+    plt.title("Absolute energy demand during heating season")
+    plt.bar(["heat loss"], E_ground, color=[0.1,1,0.5])
+    plt.bar(["heat loss"], E_window, bottom=E_ground,color=[0.5, 0.3, 0.1])
+    plt.bar(["heat loss"], E_wall, bottom=E_ground+E_window, color=[0.2,0.8,1])
+    plt.bar(["heat loss"], E_roof, bottom=E_ground+E_wall+E_window, color='r')
+    
+    plt.bar(["heat gains"],kWh_used)
+    plt.bar(["heat gains"],kWh_borehole,bottom=kWh_used)
+
+    plt.ylabel("heat in $\\frac{kWh}{a}$")
+    plt.legend(["ground","window","wall","roof","$P_{el}$","$Q_{borehole}$"])
+    plt.show()
+    
 
 #print("Total electrical kWh used in this period: ", kWh_used)
 print("kWh used in sim:", round(kWh_used,2))
