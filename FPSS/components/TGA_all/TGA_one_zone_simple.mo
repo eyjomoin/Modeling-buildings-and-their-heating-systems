@@ -35,27 +35,31 @@ model TGA_one_zone_simple
           origin={-68,38}, extent={{26,-12},{36,-6}})));
   Modelica.Blocks.Interfaces.RealInput T_amb(unit = "K") annotation (
     Placement(transformation(origin={-20,60},     extent = {{10, -10}, {-10, 10}}, rotation=90),    iconTransformation(origin={-20,50},     extent = {{10, -10}, {-10, 10}}, rotation = 90)));
+    Modelica.Blocks.Interfaces.RealInput T_roomSet(unit = "K") annotation (
+    Placement(transformation(origin={-36,60},     extent = {{10, -10}, {-10, 10}}, rotation=90),    iconTransformation(origin={-30,40},     extent = {{10, -10}, {-10, 10}}, rotation = 90)));
 equation
   connect(PrimaryCircuit.FluidPort_HP_prim_in, HeatPump.port_a2) annotation (
     Line(points = {{-73, 18}, {-48, 18}, {-48, 12}}, color = {0, 127, 255}));
   connect(PrimaryCircuit.FluidPort_HP_prim_out, HeatPump.port_b2) annotation (
     Line(points = {{-72, -12}, {-48, -12}, {-48, -8}}, color = {0, 127, 255}));
   connect(SecondaryCircuit.FP_SC1_out, HeatPump.port_a1) annotation (
-    Line(points = {{-7.9, -12.3}, {-36, -12.3}, {-36, -8}}, color = {0, 127, 255}));
+    Line(points = {{-8, -12}, {-36.1, -12.3}, {-36, -8}}, color = {0, 127, 255}));
   connect(HeatPump.port_b1, SecondaryCircuit.FP_SC1_in) annotation (
-    Line(points = {{-36, 12}, {-36, 14.3}, {-7.9, 14.3}}, color = {0, 127, 255}));
+    Line(points = {{-36, 12}, {-36.1, 14.3}, {-8, 14}}, color = {0, 127, 255}));
   connect(SecondaryCircuit.signal_ctr_HP, HeatPump.y) annotation (
-    Line(points = {{16.8, -19.9}, {16.8, -34}, {-39, -34}, {-39, -10}}, color = {0, 0, 127}));
+    Line(points = {{17, -20}, {17, -34}, {-39, -34}, {-39, -10}}, color = {0, 0, 127}));
   connect(HeatPump.QEva_flow, Q_eva_pos.x_in) annotation (
     Line(points = {{-51, 13}, {-50, 13}, {-50, 29}, {-43, 29}}, color = {0, 0, 127}));
   connect(T_Room1, SecondaryCircuit.T_room) annotation (
-    Line(points={{104,-40},{52,-40},{52,-10.4},{32,-10.4}},          color = {0, 0, 127}));
+    Line(points={{104,-40},{52,-40},{52,-10},{32,-10}},          color = {0, 0, 127}));
   connect(conv_R1, SecondaryCircuit.thermConv) annotation (
-    Line(points = {{99.5, -0.5}, {52, -0.5}, {52, 0.62}, {32, 0.62}}, color = {191, 0, 0}));
+    Line(points = {{99.5, -0.5}, {52, -0.5}, {52, 1}, {32, 1}}, color = {191, 0, 0}));
   connect(rad_R1, SecondaryCircuit.starRad) annotation (
-    Line(points={{99.5,39.5},{52,39.5},{52,11.64},{32,11.64}}));
+    Line(points={{99.5,39.5},{52,39.5},{52,12},{32,12}}));
   connect(T_amb, SecondaryCircuit.Temperature_amb) annotation (Line(points={{
-          -20,60},{-20,40},{24.4,40},{24.4,23.8}}, color={0,0,127}));
+          -20,60},{-20,40},{24,40},{24,24}}, color={0,0,127}));
+  connect(T_roomSet, SecondaryCircuit.T_roomSet) annotation(
+    Line(points = {{-36, 60}, {-2, 60}, {-2, 24}}, color = {0, 0, 127}));
   annotation (
     Diagram(coordinateSystem(extent = {{-120, -50}, {100, 50}})),
     experiment(Tolerance = 1e-6, StopTime = 1000000),

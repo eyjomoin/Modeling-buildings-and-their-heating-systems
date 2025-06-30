@@ -25,6 +25,9 @@ model SC5_simple
     Placement(transformation(origin={44,240},      extent = {{-20, -20}, {20, 20}},
         rotation=-90),                                                               iconTransformation(origin={60,120},      extent = {{-20, -20}, {20, 20}},
         rotation=-90)));
+Modelica.Blocks.Interfaces.RealInput T_roomSet(unit="K") 
+  annotation (Placement(transformation(origin = {104, 232}, extent = {{-22, -22}, {22, 22}}), 
+             iconTransformation(origin = {-80, 120}, extent = {{-20, -20}, {20, 20}}, rotation = -90)));
   Modelica.Blocks.Interfaces.RealOutput signal_ctr_HP annotation (Placement(
         transformation(
         origin={52,-240},
@@ -109,8 +112,8 @@ equation
           {120.715,20},{120.715,-10.6318}},          color={0,127,255}));
   connect(room_tubing.heating_fluid_out, T_HP_ret.port_a) annotation (Line(
         points={{121.438,-92},{121.438,-100},{-160,-100}}, color={0,127,255}));
-  connect(T_set.y, room_tubing.T_room_set) annotation (Line(points={{171,-140},
-          {135.538,-140},{135.538,-96.05}},color={0,0,127}));
+  connect(T_roomSet, room_tubing.T_room_set) annotation (Line(points={{104,232},
+          {104,-96.05},{135.538,-96.05}},color={0,0,127}));
   connect(thermConv, room_tubing.thermConv) annotation (Line(points={{222,-100},
           {180,-100},{180,-62.9136},{150,-62.9136}}, color={191,0,0}));
   connect(starRad, room_tubing.starRad) annotation (Line(points={{220,-14},{180,
