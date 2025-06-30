@@ -32,12 +32,12 @@ plot_heating_curve=plot_controller=plot_miscellaneous=plot_building=plot_HeatPum
 save = show = False
 
 ### choose your plots
-# plot_heating_curve=True
-#plot_controller=True
-#plot_miscellaneous=True
-#plot_building=True
-#plot_HeatPump=True
-#save = True
+plot_heating_curve=True
+plot_controller=True
+plot_miscellaneous=True
+plot_building=True
+plot_HeatPump=True
+save = True
 
 plot_LossBar=True
 show = True
