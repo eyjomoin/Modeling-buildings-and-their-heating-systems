@@ -30,6 +30,7 @@ parameter Modelica.Units.SI.ThermalConductivity kroof=0.18 "roof thermal conduct
 parameter Modelica.Units.SI.Density rhoroof=55 "roof density";
 parameter Modelica.Units.SI.SpecificHeatCapacity cproof=1450 "roof specific heat capacity";
 parameter Modelica.Units.SI.CoefficientOfHeatTransfer Uroof=0.4 "Overall heat transfer coefficient of the roof";
+parameter Modelica.Units.SI.Area A_floor_reference_area = 187;
 
 parameter Modelica.Units.SI.Area A_window=0;
 parameter Modelica.Units.SI.Length dWindow=0;
