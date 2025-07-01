@@ -21,6 +21,7 @@ record Building_modified "Modified parameter for the house"
   cpground        = 880,
   Uground         = 0.77,
   b_soil          = 0.5,
+  A_floor_reference_area = 173,
   
   A_roof          = 235.3,
   droof           = 0.16,

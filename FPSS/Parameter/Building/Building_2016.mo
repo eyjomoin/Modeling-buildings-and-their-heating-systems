@@ -21,6 +21,7 @@ record Building_2016 "Modified parameter for the house"
   cpground        = 880,
   Uground         = 0.17,
   b_soil          = 0.5,
+  A_floor_reference_area = 187,
   
   A_roof          = 131.9,
   droof           = 0.16,
